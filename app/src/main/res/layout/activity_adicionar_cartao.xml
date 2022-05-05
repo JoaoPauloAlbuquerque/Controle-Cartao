@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco"
+    tools:context=".AdicionarCartaoActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_adicionarcartaoactivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/azul"
+        android:elevation="4dp"
+        android:theme="@style/Theme.MaterialComponents"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_edittext_nome_cartao_adicionarcartaoactivity"
+        style="@style/edittext_layou"
+        android:layout_below="@id/toolbar_adicionarcartaoactivity"
+        android:hint="@string/hint_nome_do_cartao_adicionarcartaoactivity">
+
+        <EditText
+            android:id="@+id/edittext_nome_cartao_adicionarcartaoactivity"
+            style="@style/edittext"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_edittext_adicionarcartaoactivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_edittext_nome_cartao_adicionarcartaoactivity"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_edittext_dia_pagamento_adicionarcartaoactivity"
+            style="@style/color_barra_edittext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="0.5"
+            android:hint="@string/hint_dia_pagamento_adicionarcartaoacvitity"
+            android:textColorHint="@color/cinza">
+
+            <EditText
+                android:id="@+id/edittext__dia_pagamento_adicionarcartaoactivity"
+                style="@style/edittext"
+                android:inputType="number"
+                android:maxLength="2" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_edittext_dia_fechamento_adicionarcartaoactivity"
+            style="@style/color_barra_edittext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="0.5"
+            android:hint="@string/hint_dia_fechamento_adicionarcartaoacvitity"
+            android:textColorHint="@color/cinza">
+
+            <EditText
+                android:id="@+id/edittext__dia_fechamento_adicionarcartaoactivity"
+                style="@style/edittext"
+                android:inputType="number"
+                android:maxLength="2" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_edittext_ultimos_numeros_cartao_adicionarcartaoactivity"
+        style="@style/edittext_layou"
+        android:layout_below="@id/linearlayout_edittext_adicionarcartaoactivity"
+        android:hint="@string/hint_numeros_final_cartao_adicionarcartaoacvitity">
+
+        <EditText
+            android:id="@+id/edittext_ultimos_numeros_cartao_adicionarcartaoactivity"
+            style="@style/edittext"
+            android:inputType="number"
+            android:maxLength="4" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/botao_salvar_adicionarcartaoactivity"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_below="@id/layout_edittext_ultimos_numeros_cartao_adicionarcartaoactivity"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/azul"
+        android:text="@string/botao_salvar_adicionarcartaoactivity"
+        android:textAlignment="center"
+        android:textColor="@color/branco"
+        android:textSize="20sp" />
+
+</RelativeLayout>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco"
+    android:weightSum="1"
+    tools:context=".InfoCartaoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_infocartaoactivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/azul"
+            android:elevation="4dp"
+            android:theme="@style/Theme.MaterialComponents"
+            app:title="@string/titulo_infocartaoactivity"
+            app:popupTheme="@style/Theme.MaterialComponents.Light"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_total_mes_infocartaoacvtivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/cabecalho_valor_mensal_infocartaoactivity"
+                android:textAlignment="center"
+                android:textColor="@color/cinza"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txt_valor_mensal_infocartaoactivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/cifrao"
+                android:textAlignment="center"
+                android:textColor="@color/preto"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/txt_mes_total_infocartaoactivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/mes"
+                android:textAlignment="center"
+                android:textColor="@color/preto"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="16dp">
+
+            <TextView
+                android:id="@+id/txt_cabecalho_compras_infocartaoactivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/cabecalho_compras_infocartaoactivity"
+                android:textAlignment="center"
+                android:textColor="@color/preto"
+                android:textSize="20sp" />
+
+            <View
+                android:id="@+id/linha_divisoria_infocartaoactivity"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/txt_cabecalho_compras_infocartaoactivity"
+                android:layout_marginTop="8dp"
+                android:background="@color/cinza" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_infocartaoactivity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/linha_divisoria_infocartaoactivity"
+                android:layout_marginTop="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_recyclerview_infocartaoactivity" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatigactionbutton_infocartaoactivity"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/azul"
+        android:elevation="8dp"
+        android:src="@drawable/ic_add"
+        app:tint="@color/branco" />
+
+</RelativeLayout>

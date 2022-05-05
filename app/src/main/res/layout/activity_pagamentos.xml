@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PagamentosActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_pagamentosactivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/azul"
+        android:elevation="4dp"
+        android:theme="@style/Theme.MaterialComponents"
+        app:title="@string/titulo_pagamentosactivity" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_edittext_valor_pagar_pagamentosactivity"
+        style="@style/edittext_layou"
+        android:layout_below="@id/toolbar_pagamentosactivity"
+        android:hint="@string/hint_valor_a_ser_pago_pagamentosactivity">
+
+        <EditText
+            android:id="@+id/edittext_valor_pagar_pagamentosactivity"
+            style="@style/edittext"
+            android:inputType="numberDecimal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_edittext_numeros_cartao_editoractivity"
+        style="@style/edittext_layou"
+        android:layout_below="@id/layout_edittext_valor_pagar_pagamentosactivity"
+        android:hint="@string/hint_ultimos_numeros_cartao_pagamentosactivity">
+
+        <EditText
+            android:id="@+id/edittext__numeros_cartao_editoractivity"
+            style="@style/edittext"
+            android:inputType="number"
+            android:maxLength="4" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/botao_salvar_editoractivity"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_below="@id/layout_edittext_numeros_cartao_editoractivity"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/azul"
+        android:text="@string/botao_pagar_pagamentosactivity"
+        android:textAlignment="center"
+        android:textColor="@color/branco"
+        android:textSize="20sp" />
+
+</RelativeLayout>

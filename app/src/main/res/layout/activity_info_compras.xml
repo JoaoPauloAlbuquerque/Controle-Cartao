@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco"
+    android:orientation="vertical"
+    tools:context=".InfoComprasActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_infocomprasactivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/azul"
+        android:elevation="4dp"
+        android:theme="@style/Theme.MaterialComponents"
+        app:title="@string/titulo_infocomprasactivity"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.25"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_total_geral_infocomprasactivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/cabecalho_valor_total_geral_infocomprasactivity"
+            android:textAlignment="center"
+            android:textColor="@color/cinza"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt_valor_total_geral_infocomprasactivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/cifrao"
+            android:textAlignment="center"
+            android:textColor="@color/preto"
+            android:textSize="32sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/txt_cabecalho_cartao_infocomprasactivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@id/txt_cabecalho_total_geral_cartao_infocomprasactivity"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/cabecalho_cartoes_infocomprasactivity"
+            android:textAlignment="textStart"
+            android:textColor="@color/preto"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txt_cabecalho_total_geral_cartao_infocomprasactivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/cabecalho_total_geral_cartao_infocomprasactivity"
+            android:textAlignment="textEnd"
+            android:textColor="@color/preto"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/linha_divisoria_infocomprasactivity"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/txt_cabecalho_cartao_infocomprasactivity"
+            android:layout_marginTop="8dp"
+            android:background="@color/cinza" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_infocomprasactivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/linha_divisoria_infocomprasactivity"
+            android:layout_marginTop="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_recyclerview_infocomprasactivity" />
+
+    </RelativeLayout>
+
+</LinearLayout>
