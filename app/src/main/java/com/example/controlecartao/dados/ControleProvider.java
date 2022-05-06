@@ -18,6 +18,7 @@ public class ControleProvider extends ContentProvider {
     public static final int CARTAO_ID = 2;
 
     public static final int COMPRAS = 3;
+    public static final int COMPRAS_ID = 4;
 
     public static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -25,7 +26,8 @@ public class ControleProvider extends ContentProvider {
         URI_MATCHER.addURI(ControleContract.AUTORIZADOR, ControleContract.PATH_CARTAO, CARTAO);
         URI_MATCHER.addURI(ControleContract.AUTORIZADOR, ControleContract.PATH_CARTAO + "/#", CARTAO_ID);
 
-        URI_MATCHER.addURI(ControleContract.AUTORIZADOR, ControleContract.PATH_COMPRAS + "/#", COMPRAS);
+        URI_MATCHER.addURI(ControleContract.AUTORIZADOR, ControleContract.PATH_COMPRAS, COMPRAS);
+        URI_MATCHER.addURI(ControleContract.AUTORIZADOR, ControleContract.PATH_COMPRAS + "/#", COMPRAS_ID);
     }
 
     private ControleDbHelp dbHelp;
@@ -56,25 +58,17 @@ public class ControleProvider extends ContentProvider {
                 };
                 cursor = db.query(ControleContract.CartaoEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
-            // Se eu não passar o selectionArgs, eu preciso passar o numero do cartao como id pra o Uri.
-            // Caso contrário, eu tenho que passar o id do cartao junto com o Uri, e passar o numero do cartao dentro do selectionArgs
+
             case COMPRAS:
-                if(selectionArgs == null){
-                    selection = ControleContract.ComprasEntry.COLUNA_FK_CARTAO + " = ?";
-                    selectionArgs = new String[]{
-                            String.valueOf(ContentUris.parseId(uri))
-                    };
-                    cursor = db.query(ControleContract.ComprasEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
-                } else {
-                    String idCompra = String.valueOf(ContentUris.parseId(uri));
-                    String idCartao = selectionArgs[0];
-                    selection = ControleContract.ComprasEntry._ID + " = ? AND " + ControleContract.ComprasEntry.COLUNA_FK_CARTAO + " = ?";
-                    selectionArgs = new String[]{
-                            idCompra,
-                            idCartao
-                    };
-                    cursor = db.query(ControleContract.ComprasEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
-                }
+                selection = ControleContract.ComprasEntry.COLUNA_FK_CARTAO + " = ?";
+                cursor = db.query(ControleContract.ComprasEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case COMPRAS_ID:
+                selection = ControleContract.ComprasEntry._ID + " = ?";
+                selectionArgs = new String[]{
+                        String.valueOf(ContentUris.parseId(uri))
+                };
+                cursor = db.query(ControleContract.ComprasEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default:
                 throw new IllegalArgumentException("Erro ao fazer consulta no banco de dados;");

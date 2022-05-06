@@ -12,6 +12,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -46,6 +47,7 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
 
         if(uriCartao == null){
             getSupportActionBar().setTitle(R.string.titulo_adicionarcartaoactivity);
+            invalidateOptionsMenu();
         } else {
             getSupportActionBar().setTitle(R.string.titulo_editarcartaoactivity);
         }
@@ -70,11 +72,31 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_editarcartaoactivity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(this.uriCartao == null){
+            MenuItem item = menu.findItem(R.id.item_menu_delete_editcartaoactivity);
+            item.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case android.R.id.home: // Este é o ID do botão de voltar da activity
-                finish();
+                this.finish();
                 break;
+            case R.id.item_menu_delete_editcartaoactivity:
+                this.deletarCartao();
+                break;
+            default:
+                return false;
         }
         return true;
     }
@@ -107,6 +129,10 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
             }
         }
 
+    }
+
+    private void deletarCartao(){
+        //TODO:
     }
 
     @Override
