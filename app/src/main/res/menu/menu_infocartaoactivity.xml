@@ -8,7 +8,6 @@
         <item
             android:id="@+id/item_menu_configuracao_infocartaoactivity"
             android:icon="@drawable/ic_menu"
-
             android:title="@string/menu_configuracao_mainactivity"
             app:showAsAction="never"/>
     </group>

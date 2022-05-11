@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group>
-        <item android:id="@+id/item_menu_delete_editcartaoactivity"
+        <item android:id="@+id/item_menu_delete"
             android:icon="@drawable/ic_delete"
             android:title="Delete"
             app:showAsAction="ifRoom"/>

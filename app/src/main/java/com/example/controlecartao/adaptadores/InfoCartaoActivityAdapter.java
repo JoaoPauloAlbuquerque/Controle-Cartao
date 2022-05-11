@@ -1,6 +1,9 @@
 package com.example.controlecartao.adaptadores;
 
+import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.controlecartao.EditorActivity;
 import com.example.controlecartao.R;
 import com.example.controlecartao.dados.ControleContract;
 
@@ -61,6 +65,18 @@ public class InfoCartaoActivityAdapter extends RecyclerView.Adapter<InfoCartaoAc
             this.valor = itemView.findViewById(R.id.item_recyclerview_infocartaoactivity_valor_compra);
             this.data = itemView.findViewById(R.id.item_recyclerview_infocartaoactivity_data_compra);
             this.parcelas = itemView.findViewById(R.id.item_recyclerview_infocartaoactivity_parcelas);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cursor.moveToPosition(getAdapterPosition());
+                    int idCompra = cursor.getInt(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry._ID));
+                    Uri uri = ContentUris.withAppendedId(ControleContract.ComprasEntry.URI_CONTENT, idCompra);
+                    Intent i = new Intent(v.getContext(), EditorActivity.class);
+                    i.setData(uri);
+                    v.getContext().startActivity(i);
+                }
+            });
         }
 
         private void contruir(Cursor cursor){

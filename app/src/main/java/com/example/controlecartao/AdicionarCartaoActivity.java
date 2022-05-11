@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -73,14 +74,14 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_editarcartaoactivity, menu);
+        getMenuInflater().inflate(R.menu.menu_delete, menu);
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if(this.uriCartao == null){
-            MenuItem item = menu.findItem(R.id.item_menu_delete_editcartaoactivity);
+            MenuItem item = menu.findItem(R.id.item_menu_delete);
             item.setVisible(false);
         }
         return true;
@@ -92,7 +93,7 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
             case android.R.id.home: // Este é o ID do botão de voltar da activity
                 this.finish();
                 break;
-            case R.id.item_menu_delete_editcartaoactivity:
+            case R.id.item_menu_delete:
                 this.deletarCartao();
                 break;
             default:
@@ -132,7 +133,15 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
     }
 
     private void deletarCartao(){
-        //TODO:
+        int rowsDeleted = getContentResolver().delete(this.uriCartao, null, null);
+        if(rowsDeleted != 0){
+            Toast.makeText(this, "Cartao deletado", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, MainActivity.class);
+            this.startActivity(i);
+            this.finish();
+        } else {
+            Toast.makeText(this, "Erro ao deletar cartao", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

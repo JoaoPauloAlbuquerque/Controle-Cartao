@@ -9,6 +9,7 @@ public class ControleContract {
     public static final Uri URI_BASE = Uri.parse("content://" + AUTORIZADOR);
     public static final String PATH_CARTAO = "cartao";
     public static final String PATH_COMPRAS = "compras";
+    public static final String PATH_PARCELAS = "parcelas";
 
     public static final class CartaoEntry implements BaseColumns {
 
@@ -38,6 +39,19 @@ public class ControleContract {
         public static final String COLUNA_VALOR = "valor";
         public static final String COLUNA_QUANTIDADE_PARCELAS = "qtd_parcelas";
         public static final String COLUNA_FK_CARTAO = "fk_cartao";
+
+    }
+
+    public static final class ParcelasEntry implements BaseColumns {
+        public static final Uri URI_CONTENT = Uri.withAppendedPath(URI_BASE, PATH_PARCELAS);
+
+        public static final String NOME_TABELA = "parcelas";
+
+        public static final String _ID = BaseColumns._ID;
+        public static final String COLUNA_FK_COMPRA = "fk_compra";
+        public static final String COLUNA_VALOR_PARCELA = "valor_parcela";
+        public static final String COLUNA_MES = "mes";
+        public static final String COLUNA_ESTATOS = "estatos";
 
     }
 

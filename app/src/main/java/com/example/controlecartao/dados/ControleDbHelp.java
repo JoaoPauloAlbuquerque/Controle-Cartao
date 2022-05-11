@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 public class ControleDbHelp extends SQLiteOpenHelper {
 
-    private static final int VERSAO_BD = 4;
+    private static final int VERSAO_BD = 2;
     private static final String NOME_BD = "controle.db";
 
     public ControleDbHelp(@Nullable Context context) {
@@ -35,8 +35,18 @@ public class ControleDbHelp extends SQLiteOpenHelper {
                 ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS + " INTEGER NOT NULL," +
                 ControleContract.ComprasEntry.COLUNA_FK_CARTAO + " INTEGER NOT NULL," +
                 "FOREIGN KEY (" + ControleContract.ComprasEntry.COLUNA_FK_CARTAO + ")" +
-                "REFERENCES " + ControleContract.CartaoEntry.NOME_TABELA + " (" + ControleContract.CartaoEntry._ID + "));";
+                "REFERENCES " + ControleContract.CartaoEntry.NOME_TABELA + " (" + ControleContract.CartaoEntry._ID + ") ON DELETE CASCADE);";
         db.execSQL(SQL_CREATE_TABLE_COMPRAS);
+
+        String SQL_CREATE_TABLE_PARCELAS = "CREATE TABLE " + ControleContract.ParcelasEntry.NOME_TABELA + " (" +
+                ControleContract.ParcelasEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                ControleContract.ParcelasEntry.COLUNA_FK_COMPRA + " INTEGER NOT NULL," +
+                ControleContract.ParcelasEntry.COLUNA_VALOR_PARCELA + " TEXT NOT NULL," +
+                ControleContract.ParcelasEntry.COLUNA_MES + " INTEGER NOT NULL," +
+                ControleContract.ParcelasEntry.COLUNA_ESTATOS + " TEXT NOT NULL," +
+                "FOREIGN KEY (" + ControleContract.ParcelasEntry.COLUNA_FK_COMPRA + ") " +
+                "REFERENCES " + ControleContract.ComprasEntry.NOME_TABELA + " (" + ControleContract.ComprasEntry._ID + ") ON DELETE CASCADE);";
+        db.execSQL(SQL_CREATE_TABLE_PARCELAS);
     }
 
     /**
@@ -61,8 +71,10 @@ public class ControleDbHelp extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String SQL_DELETE_TABELA_CARTAO = "DROP TABLE IF EXISTS " + ControleContract.CartaoEntry.NOME_TABELA + ";";
         String SQL_DELETE_TABELA_COMPRAS = "DROP TABLE IF EXISTS " + ControleContract.ComprasEntry.NOME_TABELA + ";";
+        String SQL_DELETE_TABELA_PARCELAS = "DROP TABLE IF EXISTS " + ControleContract.ParcelasEntry.NOME_TABELA + ";";
         db.execSQL(SQL_DELETE_TABELA_CARTAO);
         db.execSQL(SQL_DELETE_TABELA_COMPRAS);
+        db.execSQL(SQL_DELETE_TABELA_PARCELAS);
         onCreate(db);
     }
 }
