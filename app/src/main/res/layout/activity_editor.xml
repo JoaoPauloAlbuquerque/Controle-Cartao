@@ -26,12 +26,10 @@
             style="@style/edittext_layou"
             android:layout_below="@id/toolbar_editoractivity"
             android:hint="@string/hint_onde_comprou_editoractivity">
-
             <EditText
                 android:id="@+id/edittext_onde_comprou_editoactivity"
                 style="@style/edittext"
                 android:inputType="text" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -39,13 +37,11 @@
             style="@style/edittext_layou"
             android:layout_below="@id/layout_edittext_onde_comprou_editoractivity"
             android:hint="@string/hint_valor_compra_editoractivity">
-
             <EditText
                 android:id="@+id/edittext_valor_compra_editoactivity"
                 style="@style/edittext"
                 android:inputType="numberDecimal"
                 android:maxLength="10" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -53,28 +49,24 @@
             style="@style/edittext_layou"
             android:layout_below="@id/layout_edittext_valor_compra_editoractivity"
             android:hint="@string/hint_quantidade_parcelas_editoractivity">
-
             <EditText
                 android:id="@+id/edittext_quantidade_parcelas_editoactivity"
                 style="@style/edittext"
                 android:inputType="number"
                 android:maxLength="2" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edittext_data_compra_editoractivity"
             style="@style/edittext_layou"
             android:layout_below="@id/layout_edittext_quantidade_parcelas_editoractivity"
-            android:hint="@string/hint_data_compra_editoractivity">
-
+            android:hint="@string/hint_data_compra_editoractivity"
+            app:endIconDrawable="@drawable/ic_calendar"
+            app:endIconTint="@color/cinza">
             <EditText
                 android:id="@+id/edittext_data_compra_editoactivity"
                 style="@style/edittext"
-                android:drawableEnd="@drawable/ic_calendar"
-                android:drawableTint="@color/cinza"
                 android:inputType="date" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton

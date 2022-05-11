@@ -16,12 +16,15 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlecartao.dados.ControleContract;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -34,6 +37,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private EditText parcelas;
     private EditText dataCompra;
 
+    private TextInputLayout layoutTextInputData;
+    
     private AppCompatButton botaoSalvar;
 
     @Override
@@ -48,14 +53,25 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         this.iniComponentes();
 
+        // Se o path do uri não for o nome da tabela cartao, quer dizer que eu passei o id de uma compra, ou seja, vou edita-la.
+        // Caso contrário, irei inserir uma nova compra, então tenho que esconder o botão de deletar.
         if(!this.uri.getPath().split("/")[1].equals(ControleContract.PATH_CARTAO)){
             getLoaderManager().initLoader(LOAD_VERSION, null, this);
+        } else {
+            invalidateOptionsMenu();
         }
 
         this.botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 inserirCompra();
+            }
+        });
+        
+        this.layoutTextInputData.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditorActivity.this, "Data", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -65,7 +81,20 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         this.valorCompra = findViewById(R.id.edittext_valor_compra_editoactivity);
         this.parcelas = findViewById(R.id.edittext_quantidade_parcelas_editoactivity);
         this.dataCompra = findViewById(R.id.edittext_data_compra_editoactivity);
+        this.layoutTextInputData = findViewById(R.id.layout_edittext_data_compra_editoractivity);
         this.botaoSalvar = findViewById(R.id.botao_salvar_editoractivity);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_delete, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.item_menu_delete).setVisible(false);
+        return true;
     }
 
     @Override
@@ -73,6 +102,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         switch(item.getItemId()){
             case android.R.id.home:
                 this.finish();
+                break;
+            case R.id.item_menu_delete:
+                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;
