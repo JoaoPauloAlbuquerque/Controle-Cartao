@@ -55,9 +55,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         // Se o path do uri não for o nome da tabela cartao, quer dizer que eu passei o id de uma compra, ou seja, vou edita-la.
         // Caso contrário, irei inserir uma nova compra, então tenho que esconder o botão de deletar.
-        if(!this.uri.getPath().split("/")[1].equals(ControleContract.PATH_CARTAO)){
+        if(!(this.uri.getPath().split("/")[1].equals(ControleContract.PATH_CARTAO))){
+            this.setTitle(R.string.titulo_editoractivity_edit_compra);
             getLoaderManager().initLoader(LOAD_VERSION, null, this);
         } else {
+            this.setTitle(R.string.titulo_editoractivity_add_compra);
             invalidateOptionsMenu();
         }
 
@@ -93,7 +95,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.item_menu_delete).setVisible(false);
+        super.onPrepareOptionsMenu(menu);
+        if(this.uri.getPath().split("/")[1].equals(ControleContract.PATH_CARTAO)) {
+            menu.findItem(R.id.item_menu_delete).setVisible(false);
+        }
         return true;
     }
 
@@ -102,12 +107,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         switch(item.getItemId()){
             case android.R.id.home:
                 this.finish();
-                break;
+                return true;
             case R.id.item_menu_delete:
                 Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
-                break;
+                return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     private void inserirCompra(){

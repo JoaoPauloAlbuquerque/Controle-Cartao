@@ -18,8 +18,7 @@
             android:layout_alignParentTop="true"
             android:background="@color/azul"
             android:elevation="4dp"
-            android:theme="@style/Theme.MaterialComponents"
-            app:title="@string/titulo_editoractivity_add_compra" />
+            android:theme="@style/Theme.MaterialComponents"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edittext_onde_comprou_editoractivity"
@@ -61,6 +60,7 @@
             style="@style/edittext_layou"
             android:layout_below="@id/layout_edittext_quantidade_parcelas_editoractivity"
             android:hint="@string/hint_data_compra_editoractivity"
+            app:endIconMode="custom"
             app:endIconDrawable="@drawable/ic_calendar"
             app:endIconTint="@color/cinza">
             <EditText

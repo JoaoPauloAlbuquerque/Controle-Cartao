@@ -137,6 +137,7 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
         if(rowsDeleted != 0){
             Toast.makeText(this, "Cartao deletado", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(this, MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             this.startActivity(i);
             this.finish();
         } else {
