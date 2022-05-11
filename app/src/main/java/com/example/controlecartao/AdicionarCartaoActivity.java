@@ -137,6 +137,8 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
         if(rowsDeleted != 0){
             Toast.makeText(this, "Cartao deletado", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(this, MainActivity.class);
+            // Com esta flag, quando a MainActivity for iniciada, todas as outras acticitys que
+            // estiverem na pilha de execução do app seram finalizadas
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             this.startActivity(i);
             this.finish();
