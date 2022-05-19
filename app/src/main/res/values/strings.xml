@@ -109,5 +109,6 @@
     <string name="zeros">0000</string>
     <string name="parcelas">1x</string>
     <string name="menu_configuracao_mainactivity">Configuração</string>
+    <string name="data_padrao">mês/ano</string>
 
 </resources>

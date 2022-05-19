@@ -60,9 +60,12 @@ public class ControleProvider extends ContentProvider {
                 };
                 cursor = db.query(ControleContract.CartaoEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
-            // Se eu passar apenas o nome da tabela, então eu vou passar o id do cartão no selectionArgs, assim, eu seleciono todos as compras do cartão
+            // Se eu passar apenas o nome da tabela compras, então eu vou passar o id do cartão no selectionArgs, assim, eu seleciono todos as compras do cartão
             case COMPRAS:
                 selection = ControleContract.ComprasEntry.COLUNA_FK_CARTAO + " = ?";
+                sortOrder = ControleContract.ComprasEntry.COLUNA_ANO + " DESC, " +
+                        ControleContract.ComprasEntry.COLUNA_MES + " DESC, " +
+                        ControleContract.ComprasEntry.COLUNA_DIA + " DESC";
                 cursor = db.query(ControleContract.ComprasEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             // Se eu passar o id ca compra, seleciono apenas ela

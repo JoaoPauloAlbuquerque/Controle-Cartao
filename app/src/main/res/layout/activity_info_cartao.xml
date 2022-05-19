@@ -89,10 +89,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_infocartaoactivity"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/linha_divisoria_infocartaoactivity"
                 android:layout_marginTop="16dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
                 tools:listitem="@layout/item_recyclerview_infocartaoactivity" />
 
         </RelativeLayout>

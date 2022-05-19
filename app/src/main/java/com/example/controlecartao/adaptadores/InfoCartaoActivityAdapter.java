@@ -16,7 +16,7 @@ import com.example.controlecartao.EditorActivity;
 import com.example.controlecartao.R;
 import com.example.controlecartao.dados.ControleContract;
 
-public class InfoCartaoActivityAdapter extends RecyclerView.Adapter<InfoCartaoActivityAdapter.MyViewHolder> {
+public class InfoCartaoActivityAdapter extends RecyclerView.Adapter<InfoCartaoActivityAdapter.MyViewHolder>{
 
     private Cursor cursor;
 

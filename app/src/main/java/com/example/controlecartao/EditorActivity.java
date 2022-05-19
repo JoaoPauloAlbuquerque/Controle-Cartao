@@ -109,7 +109,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 this.finish();
                 return true;
             case R.id.item_menu_delete:
-                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show();
+                this.deleteCompra();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -146,6 +146,18 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             }
         }
     }
+    
+    private void deleteCompra(){
+        if(this.uri.getPath().split("/")[1].equals(ControleContract.PATH_COMPRAS)){
+            int rowsDeleted = this.getContentResolver().delete(this.uri, null, null);
+            if(rowsDeleted > 0){
+                Toast.makeText(this, "Compra deletada", Toast.LENGTH_SHORT).show();
+                this.finish();
+            } else {
+                Toast.makeText(this, "Erro ao deletar compra", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     private Integer[] getData(){
         String[] data = this.dataCompra.getText().toString().split("/");
@@ -172,17 +184,18 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        data.moveToNext();
-        this.ondeComprou.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)));
-        this.valorCompra.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)));
-        this.parcelas.setText(String.valueOf(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS))));
-        StringBuilder dataFormatada = new StringBuilder();
-        dataFormatada.append(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)));
-        dataFormatada.append("/");
-        dataFormatada.append(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES)));
-        dataFormatada.append("/");
-        dataFormatada.append(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_ANO)));
-        this.dataCompra.setText(dataFormatada.toString());
+        if(data.moveToNext()){
+            this.ondeComprou.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)));
+            this.valorCompra.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)));
+            this.parcelas.setText(String.valueOf(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS))));
+            StringBuilder dataFormatada = new StringBuilder();
+            dataFormatada.append(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)));
+            dataFormatada.append("/");
+            dataFormatada.append(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES)));
+            dataFormatada.append("/");
+            dataFormatada.append(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_ANO)));
+            this.dataCompra.setText(dataFormatada.toString());
+        }
     }
 
     @Override

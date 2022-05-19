@@ -20,5 +20,7 @@
 
     <color name="cinza">#ACACAC</color>
 
+    <color name="cinza_claro">#E2E2E2</color>
+
     <color name="status_bar">#0288D1</color>
 </resources>

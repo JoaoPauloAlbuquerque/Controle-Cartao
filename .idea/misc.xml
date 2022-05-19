@@ -9,14 +9,17 @@
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/activity_adicionar_cartao.xml" value="0.33958333333333335" />
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/activity_compras.xml" value="0.33958333333333335" />
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/activity_editor.xml" value="0.33958333333333335" />
-        <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/activity_info_cartao.xml" value="0.33958333333333335" />
+        <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/activity_info_cartao.xml" value="0.3343589743589744" />
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/activity_info_compras.xml" value="0.33958333333333335" />
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/activity_main.xml" value="0.33958333333333335" />
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/activity_pagamentos.xml" value="0.33958333333333335" />
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/activity_splash.xml" value="0.25" />
-        <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/item_recyclerview_infocartaoactivity.xml" value="0.27863247863247864" />
+        <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/item_recyclerview_grupo_datas_infocartaoactivity.xml" value="0.33958333333333335" />
+        <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/item_recyclerview_infocartaoactivity.xml" value="0.3343589743589744" />
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/item_recyclerview_infocomprasactivity.xml" value="0.27863247863247864" />
+        <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/item_recyclerview_itens_data_infocartaoactivity.xml" value="0.33958333333333335" />
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/item_recyclerview_mainactivity.xml" value="0.33958333333333335" />
+        <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/layout/recyclerview_item_recyclerview_infocartaoactivity.xml" value="0.33958333333333335" />
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/menu/menu_editarcartaoactivity.xml" value="0.33958333333333335" />
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/menu/menu_infocartaoactivity.xml" value="0.33958333333333335" />
         <entry key="..\:/Users/JoaoPaulo/Documents/Projetos/ControleCartao/app/src/main/res/menu/menu_mainactivity.xml" value="0.33958333333333335" />
