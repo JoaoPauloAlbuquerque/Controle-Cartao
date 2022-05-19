@@ -124,7 +124,9 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
             int rowsAfected = getContentResolver().update(this.uriCartao, values, null, null);
             if(rowsAfected > 0){
                 Toast.makeText(this, "Cartao salvo", Toast.LENGTH_SHORT).show();
-                this.finish();
+                Intent i = new Intent(this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                this.startActivity(i);
             } else {
                 Toast.makeText(this, "Erro ao salvar cartão", Toast.LENGTH_SHORT).show();
             }

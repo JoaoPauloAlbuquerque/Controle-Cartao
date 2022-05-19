@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 public class ControleDbHelp extends SQLiteOpenHelper {
 
-    private static final int VERSAO_BD = 2;
+    private static final int VERSAO_BD = 5;
     private static final String NOME_BD = "controle.db";
 
     public ControleDbHelp(@Nullable Context context) {
@@ -20,17 +20,17 @@ public class ControleDbHelp extends SQLiteOpenHelper {
         String SQL_CREATE_TABLE_CARTAO = "CREATE TABLE " + ControleContract.CartaoEntry.NOME_TABELA + " (" +
                 ControleContract.CartaoEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ControleContract.CartaoEntry.COLUNA_NOME_CARTAO + " TEXT NOT NULL," +
-                ControleContract.CartaoEntry.COLUNA_DIA_PAGAMENTO + " INTEGER NOT NULL," +
-                ControleContract.CartaoEntry.COLUNA_DIA_FECHAMENTO + " INTEGER NOT NULL," +
+                ControleContract.CartaoEntry.COLUNA_DIA_PAGAMENTO + " VARCHAR(2) NOT NULL," +
+                ControleContract.CartaoEntry.COLUNA_DIA_FECHAMENTO + " VARCHAR(2) NOT NULL," +
                 ControleContract.CartaoEntry.COLUNA_NUMERO_FINAL_CARTAO + " INTEGER NOT NULL UNIQUE);";
         db.execSQL(SQL_CREATE_TABLE_CARTAO);
 
         String SQL_CREATE_TABLE_COMPRAS = "CREATE TABLE " + ControleContract.ComprasEntry.NOME_TABELA + " (" +
                 ControleContract.ComprasEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ControleContract.ComprasEntry.COLUNA_DESCRICAO + " TEXT NOT NULL," +
-                ControleContract.ComprasEntry.COLUNA_DIA + " INTEGER NOT NULL," +
-                ControleContract.ComprasEntry.COLUNA_MES + " INTEGER NOT NULL," +
-                ControleContract.ComprasEntry.COLUNA_ANO + " INTEGER NOT NULL," +
+                ControleContract.ComprasEntry.COLUNA_DIA + " VARCHAR(2) NOT NULL," +
+                ControleContract.ComprasEntry.COLUNA_MES + " CARCHAR(2) NOT NULL," +
+                ControleContract.ComprasEntry.COLUNA_ANO + " VARCHAR(4) NOT NULL," +
                 ControleContract.ComprasEntry.COLUNA_VALOR + " TEXT NOT NULL," +
                 ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS + " INTEGER NOT NULL," +
                 ControleContract.ComprasEntry.COLUNA_FK_CARTAO + " INTEGER NOT NULL," +
@@ -42,7 +42,7 @@ public class ControleDbHelp extends SQLiteOpenHelper {
                 ControleContract.ParcelasEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ControleContract.ParcelasEntry.COLUNA_FK_COMPRA + " INTEGER NOT NULL," +
                 ControleContract.ParcelasEntry.COLUNA_VALOR_PARCELA + " TEXT NOT NULL," +
-                ControleContract.ParcelasEntry.COLUNA_MES + " INTEGER NOT NULL," +
+                ControleContract.ParcelasEntry.COLUNA_MES + " VARCHAR(2) NOT NULL," +
                 ControleContract.ParcelasEntry.COLUNA_ESTATOS + " TEXT NOT NULL," +
                 "FOREIGN KEY (" + ControleContract.ParcelasEntry.COLUNA_FK_COMPRA + ") " +
                 "REFERENCES " + ControleContract.ComprasEntry.NOME_TABELA + " (" + ControleContract.ComprasEntry._ID + ") ON DELETE CASCADE);";

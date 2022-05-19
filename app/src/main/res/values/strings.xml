@@ -13,7 +13,7 @@
     <string name="butao_adicionar_cartao_mainacvtivity">Novo cartão</string>
 
     <!-- Texte da view para quando o recyclerview estiver vazio -->
-    <string name="text_empty_recyclerview_mainactivity">Cadastre o primeiro cartão</string>
+    <string name="titulo_card_cartao_recyclerview_mainactivity">Meus cartões</string>
 
     <!-- Texte da view para quando o recyclerview estiver preenchido -->
     <string name="text_preenchido_recyclerview_mainactivity">Cadastre o primeiro cartão</string>

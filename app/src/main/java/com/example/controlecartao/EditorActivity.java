@@ -38,7 +38,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private EditText dataCompra;
 
     private TextInputLayout layoutTextInputData;
-    
+
     private AppCompatButton botaoSalvar;
 
     @Override
@@ -69,7 +69,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 inserirCompra();
             }
         });
-        
+
         this.layoutTextInputData.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +118,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private void inserirCompra(){
         ContentValues values = new ContentValues();
 
-        Integer[] data = this.getData();
+        String[] data = this.getData();
         values.put(ControleContract.ComprasEntry.COLUNA_DESCRICAO, this.ondeComprou.getText().toString().trim());
         values.put(ControleContract.ComprasEntry.COLUNA_DIA, data[0]);
         values.put(ControleContract.ComprasEntry.COLUNA_MES, data[1]);
@@ -136,7 +136,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             } else {
                 Toast.makeText(this, "Erro ao inserir compra", Toast.LENGTH_SHORT).show();
             }
-        } else {
+        } else {    // Se não, irei atualizar um item
             int rowsUpdated = getContentResolver().update(this.uri, values, null, null);
             if(rowsUpdated != 0){
                 Toast.makeText(this, "Compra atualizada", Toast.LENGTH_SHORT).show();
@@ -146,7 +146,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             }
         }
     }
-    
+
     private void deleteCompra(){
         if(this.uri.getPath().split("/")[1].equals(ControleContract.PATH_COMPRAS)){
             int rowsDeleted = this.getContentResolver().delete(this.uri, null, null);
@@ -159,13 +159,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
     }
 
-    private Integer[] getData(){
+    private String[] getData(){
         String[] data = this.dataCompra.getText().toString().split("/");
-        return new Integer[]{
-                Integer.parseInt(data[0]),
-                Integer.parseInt(data[1]),
-                Integer.parseInt(data[2])
-        };
+        return data;
     }
 
     @Override
@@ -189,11 +185,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             this.valorCompra.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)));
             this.parcelas.setText(String.valueOf(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS))));
             StringBuilder dataFormatada = new StringBuilder();
-            dataFormatada.append(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)));
+            dataFormatada.append(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)));
             dataFormatada.append("/");
-            dataFormatada.append(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES)));
+            dataFormatada.append(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES)));
             dataFormatada.append("/");
-            dataFormatada.append(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_ANO)));
+            dataFormatada.append(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_ANO)));
             this.dataCompra.setText(dataFormatada.toString());
         }
     }

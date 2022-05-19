@@ -107,7 +107,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/azul_ecuro"
+        android:backgroundTint="@color/azul_escuro"
         android:elevation="8dp"
         android:src="@drawable/ic_add"
         app:tint="@color/branco" />

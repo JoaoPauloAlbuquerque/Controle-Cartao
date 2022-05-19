@@ -1,46 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginBottom="4dp"
     android:background="@color/branco"
-    tools:showIn="@layout/activity_main"
-    android:layout_marginBottom="4dp">
+    tools:showIn="@layout/activity_main">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/item_recyclerview_mainactivity_card"
         android:layout_width="80dp"
         android:layout_height="56dp"
-        android:backgroundTint="@color/azul"
         android:layout_marginStart="24dp"
+        android:backgroundTint="@color/azul"
         app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/item_recyclerview_mainactivity_numero_cartao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-medium"
             android:text="@string/zeros"
             android:textColor="@color/branco"
-            android:textSize="24sp"
-            android:layout_gravity="center"
-            android:fontFamily="sans-serif-medium"/>
+            android:textSize="24sp" />
     </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/item_recyclerview_mainactivity_nome_cartao"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
         android:text="@string/desconhecido"
+        android:textAlignment="center"
         android:textColor="@color/azul"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/item_recyclerview_mainactivity_card"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/item_recyclerview_mainactivity_card"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,7 +28,7 @@
             <EditText
                 android:id="@+id/edittext_onde_comprou_editoactivity"
                 style="@style/edittext"
-                android:inputType="text" />
+                android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -75,7 +75,7 @@
             android:layout_height="56dp"
             android:layout_below="@id/layout_edittext_data_compra_editoractivity"
             android:layout_margin="16dp"
-            android:backgroundTint="@color/azul_ecuro"
+            android:backgroundTint="@color/azul_escuro"
             android:text="@string/botao_salvar_editoractivity"
             android:textAlignment="center"
             android:textColor="@color/branco"
