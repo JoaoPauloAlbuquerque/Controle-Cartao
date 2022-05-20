@@ -29,6 +29,7 @@ import com.example.controlecartao.dados.ControleContract;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -83,6 +84,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     private void onCreateDataPicker(){
+        Locale.setDefault(new Locale("pt", "BR"));
         DatePickerDialog dataPicker = new DatePickerDialog(
                 EditorActivity.this,                        // Contexto
                 new DatePickerDialog.OnDateSetListener() {         // OnDateSetListener
@@ -105,8 +107,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 Calendar.getInstance().get(Calendar.MONTH),         // Uma instancia de Calendar para o Mês (AQUI É SELECIONADO O MES ATUAL DA MAQUINA)
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)   // Uma instancia de Calendar para o Dia (AQUI É SELECIONADO O DIA ATUAL DA MAQUINA)
         );
-        dataPicker.setMessage("Selecione a data");
-
         dataPicker.show();
     }
 
