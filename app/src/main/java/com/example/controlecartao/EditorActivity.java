@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.DatePickerDialog;
 import android.app.LoaderManager;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -20,11 +21,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlecartao.dados.ControleContract;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Calendar;
 
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -73,9 +77,37 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         this.layoutTextInputData.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(EditorActivity.this, "Data", Toast.LENGTH_SHORT).show();
+                onCreateDataPicker();
             }
         });
+    }
+
+    private void onCreateDataPicker(){
+        DatePickerDialog dataPicker = new DatePickerDialog(
+                EditorActivity.this,                        // Contexto
+                new DatePickerDialog.OnDateSetListener() {         // OnDateSetListener
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String dia = String.valueOf(dayOfMonth);
+                        String mes = String.valueOf(month + 1);
+                        String ano = String.valueOf(year);
+                        if(dia.length() == 1){
+                            dia = "0" + dia;
+                        }
+                        if(mes.length() == 1){
+                            mes = "0" + mes;
+                        }
+                        String data = dia + "/" + mes + "/" + ano;
+                        dataCompra.setText(data);
+                    }
+                },
+                Calendar.getInstance().get(Calendar.YEAR),          // Uma instancia de Calendar para o Ano (AQUI É SELECIONADO O ANO ATUAL DA MAQUINA)
+                Calendar.getInstance().get(Calendar.MONTH),         // Uma instancia de Calendar para o Mês (AQUI É SELECIONADO O MES ATUAL DA MAQUINA)
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)   // Uma instancia de Calendar para o Dia (AQUI É SELECIONADO O DIA ATUAL DA MAQUINA)
+        );
+        dataPicker.setMessage("Selecione a data");
+
+        dataPicker.show();
     }
 
     private void iniComponentes(){
@@ -125,10 +157,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         values.put(ControleContract.ComprasEntry.COLUNA_ANO, data[2]);
         values.put(ControleContract.ComprasEntry.COLUNA_VALOR, this.valorCompra.getText().toString().trim());
         values.put(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS, Integer.parseInt(this.parcelas.getText().toString().trim()));
-        values.put(ControleContract.ComprasEntry.COLUNA_FK_CARTAO, Integer.parseInt(String.valueOf(ContentUris.parseId(this.uri))));
+
 
         // Se for passado apenas o caminho do cartão, eu vou inserir um novo item
         if(this.uri.getPath().split("/")[1].equals(ControleContract.PATH_CARTAO)){  // Estou pegando apenas o nome da tabela e comparando com o nome das tabela "cartao"
+            values.put(ControleContract.ComprasEntry.COLUNA_FK_CARTAO, Integer.parseInt(String.valueOf(ContentUris.parseId(this.uri))));
             Uri uriInsert = getContentResolver().insert(ControleContract.ComprasEntry.URI_CONTENT, values);
             if(ContentUris.parseId(uriInsert) != 0){
                 Toast.makeText(this, "Compra inserida", Toast.LENGTH_SHORT).show();
@@ -160,7 +193,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     private String[] getData(){
-        String[] data = this.dataCompra.getText().toString().split("/");
+        String[] data = this.dataCompra.getText().toString().trim().split("/");
+        Log.e("dia", this.dataCompra.getText().toString().trim().split("/")[0]);
+        Log.e("mes", this.dataCompra.getText().toString().trim().split("/")[1]);
+        Log.e("ano", this.dataCompra.getText().toString().split("/")[2]);
         return data;
     }
 
