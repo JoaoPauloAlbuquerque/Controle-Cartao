@@ -107,7 +107,7 @@ public class InfoCartaoActivityAdapter extends RecyclerView.Adapter<InfoCartaoAc
                 alterarTitulo = mes;
                 primeiroTitulo = false;
                 this.tituloData.setText(dataFormatada);
-            } else if(!alterarTitulo.equals(mes)){
+            } else if(!(alterarTitulo.equals(mes)) || getAdapterPosition() == 0){
                 alterarTitulo = mes;
                 this.tituloData.setText(dataFormatada);
             } else {

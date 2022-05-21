@@ -7,7 +7,7 @@
     android:background="@color/branco"
     tools:context=".EditorActivity">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -15,26 +15,45 @@
             android:id="@+id/toolbar_editoractivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:background="@color/azul"
             android:elevation="4dp"
-            android:theme="@style/Theme.MaterialComponents"/>
+            android:theme="@style/Theme.MaterialComponents"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edittext_onde_comprou_editoractivity"
             style="@style/edittext_layou"
-            android:layout_below="@id/toolbar_editoractivity"
-            android:hint="@string/hint_onde_comprou_editoractivity">
+            android:hint="@string/hint_onde_comprou_editoractivity"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_editoractivity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
             <EditText
                 android:id="@+id/edittext_onde_comprou_editoactivity"
                 style="@style/edittext"
-                android:inputType="textPersonName" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cifrao"
+            android:layout_marginEnd="32dp"
+            android:textSize="20sp"
+            android:textColor="@color/cinza"
+            android:fontFamily="sans-serif-medium"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/layout_edittext_valor_compra_editoractivity"
+            app:layout_constraintTop_toTopOf="@id/layout_edittext_valor_compra_editoractivity"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edittext_valor_compra_editoractivity"
             style="@style/edittext_layou"
-            android:layout_below="@id/layout_edittext_onde_comprou_editoractivity"
+            app:layout_constraintTop_toBottomOf="@id/layout_edittext_onde_comprou_editoractivity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:hint="@string/hint_valor_compra_editoractivity">
             <EditText
                 android:id="@+id/edittext_valor_compra_editoactivity"
@@ -43,10 +62,25 @@
                 android:maxLength="10" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/x"
+            android:layout_marginEnd="32dp"
+            android:textSize="20sp"
+            android:textColor="@color/cinza"
+            android:fontFamily="sans-serif-medium"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/layout_edittext_quantidade_parcelas_editoractivity"
+            app:layout_constraintTop_toTopOf="@id/layout_edittext_quantidade_parcelas_editoractivity"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edittext_quantidade_parcelas_editoractivity"
             style="@style/edittext_layou"
-            android:layout_below="@id/layout_edittext_valor_compra_editoractivity"
+            app:layout_constraintTop_toBottomOf="@id/layout_edittext_valor_compra_editoractivity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:hint="@string/hint_quantidade_parcelas_editoractivity">
             <EditText
                 android:id="@+id/edittext_quantidade_parcelas_editoactivity"
@@ -58,7 +92,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edittext_data_compra_editoractivity"
             style="@style/edittext_layou"
-            android:layout_below="@id/layout_edittext_quantidade_parcelas_editoractivity"
+            app:layout_constraintTop_toBottomOf="@id/layout_edittext_quantidade_parcelas_editoractivity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:hint="@string/hint_data_compra_editoractivity"
             app:endIconMode="custom"
             app:endIconDrawable="@drawable/ic_calendar"
@@ -73,7 +109,9 @@
             android:id="@+id/botao_salvar_editoractivity"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_below="@id/layout_edittext_data_compra_editoractivity"
+            app:layout_constraintTop_toBottomOf="@id/layout_edittext_data_compra_editoractivity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="16dp"
             android:backgroundTint="@color/azul_escuro"
             android:text="@string/botao_salvar_editoractivity"
@@ -81,6 +119,6 @@
             android:textColor="@color/branco"
             android:textSize="20sp" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

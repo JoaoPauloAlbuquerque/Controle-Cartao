@@ -110,5 +110,6 @@
     <string name="parcelas">1x</string>
     <string name="menu_configuracao_mainactivity">Configuração</string>
     <string name="data_padrao">mês/ano</string>
+    <string name="x">x</string>
 
 </resources>
