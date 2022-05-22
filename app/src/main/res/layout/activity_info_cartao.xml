@@ -8,96 +8,105 @@
     android:weightSum="1"
     tools:context=".InfoCartaoActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_infocartaoactivity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/azul"
-            android:elevation="4dp"
-            android:theme="@style/Theme.MaterialComponents"
-            app:title="@string/titulo_infocartaoactivity"
-            app:popupTheme="@style/Theme.MaterialComponents.Light"/>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.25"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-            <TextView
-                android:id="@+id/txt_total_mes_infocartaoacvtivity"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_infocartaoactivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/cabecalho_valor_mensal_infocartaoactivity"
-                android:textAlignment="center"
-                android:textColor="@color/cinza"
-                android:textSize="16sp" />
+                android:background="@color/azul"
+                android:elevation="4dp"
+                android:theme="@style/Theme.MaterialComponents"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/Theme.MaterialComponents.Light"
+                app:title="@string/titulo_infocartaoactivity" />
 
-            <TextView
-                android:id="@+id/txt_valor_mensal_infocartaoactivity"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/cifrao"
-                android:textAlignment="center"
-                android:textColor="@color/preto"
-                android:textSize="32sp" />
+                android:layout_height="0dp"
+                android:layout_weight="0.25"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="32dp">
 
-            <TextView
-                android:id="@+id/txt_mes_total_infocartaoactivity"
+                <TextView
+                    android:id="@+id/txt_total_mes_infocartaoacvtivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/cabecalho_valor_mensal_infocartaoactivity"
+                    android:textAlignment="center"
+                    android:textColor="@color/cinza"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txt_valor_mensal_infocartaoactivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/cifrao"
+                    android:textAlignment="center"
+                    android:textColor="@color/preto"
+                    android:textSize="32sp" />
+
+                <TextView
+                    android:id="@+id/txt_mes_total_infocartaoactivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/mes"
+                    android:textAlignment="center"
+                    android:textColor="@color/preto"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/mes"
-                android:textAlignment="center"
-                android:textColor="@color/preto"
-                android:textSize="16sp" />
+                android:layout_height="0dp"
+                android:layout_weight="0.75"
+                android:paddingHorizontal="16dp">
+
+                <TextView
+                    android:id="@+id/txt_cabecalho_compras_infocartaoactivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/cabecalho_compras_infocartaoactivity"
+                    android:textAlignment="center"
+                    android:textColor="@color/preto"
+                    android:textSize="20sp" />
+
+                <View
+                    android:id="@+id/linha_divisoria_infocartaoactivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/txt_cabecalho_compras_infocartaoactivity"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/cinza" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_infocartaoactivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/linha_divisoria_infocartaoactivity"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_recyclerview_infocartaoactivity" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.75"
-            android:paddingHorizontal="16dp">
-
-            <TextView
-                android:id="@+id/txt_cabecalho_compras_infocartaoactivity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/cabecalho_compras_infocartaoactivity"
-                android:textAlignment="center"
-                android:textColor="@color/preto"
-                android:textSize="20sp" />
-
-            <View
-                android:id="@+id/linha_divisoria_infocartaoactivity"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/txt_cabecalho_compras_infocartaoactivity"
-                android:layout_marginTop="8dp"
-                android:background="@color/cinza" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_infocartaoactivity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/linha_divisoria_infocartaoactivity"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="4"
-                tools:listitem="@layout/item_recyclerview_infocartaoactivity" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatigactionbutton_infocartaoactivity"
