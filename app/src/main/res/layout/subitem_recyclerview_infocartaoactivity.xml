@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="24dp"
+    android:background="@drawable/ripple">
+
+    <TextView
+        android:id="@+id/item_recyclerview_infocartaoactivity_onde_comprou"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/desconhecido"
+        android:textAlignment="textStart"
+        android:textColor="@color/preto"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/item_recyclerview_infocartaoactivity_data_compra"
+        app:layout_constraintEnd_toStartOf="@id/item_recyclerview_infocartaoactivity_valor_compra"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_recyclerview_infocartaoactivity_valor_compra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/cifrao"
+        android:textAlignment="textEnd"
+        android:textColor="@color/azul"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/item_recyclerview_infocartaoactivity_parcelas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_recyclerview_infocartaoactivity_data_compra"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/desconhecido"
+        android:textAlignment="textStart"
+        android:textColor="@color/cinza"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/item_recyclerview_infocartaoactivity_parcelas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_recyclerview_infocartaoactivity_onde_comprou" />
+
+    <TextView
+        android:id="@+id/item_recyclerview_infocartaoactivity_parcelas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/parcelas"
+        android:textAlignment="textStart"
+        android:textColor="@color/cinza"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_recyclerview_infocartaoactivity_valor_compra" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

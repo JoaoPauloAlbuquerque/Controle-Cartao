@@ -16,9 +16,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.controlecartao.adaptadores.InfoCartaoActivityAdapter;
 import com.example.controlecartao.dados.ControleContract;
+import com.example.controlecartao.utils.CalcUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class InfoCartaoActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -31,6 +33,8 @@ public class InfoCartaoActivity extends AppCompatActivity implements LoaderManag
 
     private RecyclerView rv;
     private InfoCartaoActivityAdapter adapter;
+
+    private TextView txtValor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,7 @@ public class InfoCartaoActivity extends AppCompatActivity implements LoaderManag
     private void iniComponentes(){
         this.actionButton = findViewById(R.id.floatigactionbutton_infocartaoactivity);
         this.rv = findViewById(R.id.recyclerview_infocartaoactivity);
+        this.txtValor = findViewById(R.id.txt_valor_mensal_infocartaoactivity);
     }
 
     @Override
@@ -115,11 +120,20 @@ public class InfoCartaoActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        double valor = CalcUtils.CalcularCompras.calcular(data, this);
+        if(valor == 0.0f){
+            this.txtValor.setText("R$ 0.00");
+        } else {
+            this.txtValor.setText(CalcUtils.convertValueToCifrao(
+                    CalcUtils.convertDoubleToString(valor)
+            ));
+        }
         this.adapter.setCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        this.txtValor.setText(getString(R.string.cifrao));
         this.adapter.setCursor(null);
     }
 }

@@ -1,9 +1,6 @@
 package com.example.controlecartao.adaptadores;
 
-import android.content.ContentUris;
-import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,124 +9,131 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.versionedparcelable.VersionedParcel;
 
-import com.example.controlecartao.EditorActivity;
 import com.example.controlecartao.R;
 import com.example.controlecartao.dados.ControleContract;
+import com.example.controlecartao.objetos.Objeto;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class InfoCartaoActivityAdapter extends RecyclerView.Adapter<InfoCartaoActivityAdapter.MyViewHolder>{
+public class InfoCartaoActivityAdapter extends RecyclerView.Adapter<InfoCartaoActivityAdapter.ItemMyViewHolder>{
 
     private Cursor cursor;
-
-    private boolean primeiroTitulo = true;
-    private String alterarTitulo = "";
+    private ArrayList<Objeto> list;
 
     public InfoCartaoActivityAdapter(Cursor cursor){
         this.cursor = cursor;
+        this.list = this.subtraiCursor(this.cursor);
+    }
+
+    private ArrayList<Objeto> subtraiCursor(Cursor c){
+        if(c != null) {
+            ArrayList<Objeto> mList = new ArrayList<>();
+            String ultimoMesAnalizado = "00";
+            if(c.moveToFirst()) {
+                do {
+                    if (ultimoMesAnalizado.equals("00")) {
+                        ultimoMesAnalizado = c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES));
+                        mList.add(
+                                new Objeto(
+                                        c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry._ID)),
+                                        c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)),
+                                        c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)),
+                                        c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)),
+                                        c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES)),
+                                        c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_ANO)),
+                                        c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS)),
+                                        c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_FK_CARTAO))
+                                )
+                        );
+                    } else {
+                        String mesAtual = c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES));
+                        if (!ultimoMesAnalizado.equals(mesAtual)) {
+                            ultimoMesAnalizado = mesAtual;
+                            mList.add(
+                                    new Objeto(
+                                            c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry._ID)),
+                                            c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)),
+                                            c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)),
+                                            c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)),
+                                            c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES)),
+                                            c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_ANO)),
+                                            c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS)),
+                                            c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_FK_CARTAO))
+                                    )
+                            );
+                        }
+                    }
+                } while (c.moveToNext());
+            }
+            return mList;
+        } else {
+            return null;
+        }
     }
 
     public void setCursor(Cursor cursor){
         this.cursor = cursor;
-        this.notifyDataSetChanged();
+        this.list = this.subtraiCursor(this.cursor);
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemMyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recyclerview_infocartaoactivity, parent, false);
-        return new MyViewHolder(v);
+        return new ItemMyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        this.cursor.moveToPosition(position);
-        holder.contruir(this.cursor);
+    public void onBindViewHolder(@NonNull ItemMyViewHolder holder, int position) {
+        holder.contruir(
+                this.list.get(position).getDia(),
+                this.list.get(position).getMes(),
+                this.list.get(position).getAno()
+        );
     }
 
     @Override
     public int getItemCount() {
-        if(this.cursor != null){
-            return this.cursor.getCount();
-        } else {
+        if(list == null){
             return 0;
+        } else {
+            return list.size();
         }
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class ItemMyViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView tituloData;
-        private TextView descricao;
-        private TextView valor;
-        private TextView data;
-        private TextView parcelas;
+        private TextView titulo;
+        private RecyclerView rv;
+        public InfoCartaoActivitySubitemAdapter adapter;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public ItemMyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            this.tituloData = itemView.findViewById(R.id.item_recyclerview_infocartaoactivity_titulo_data);
-            this.descricao = itemView.findViewById(R.id.item_recyclerview_infocartaoactivity_onde_comprou);
-            this.valor = itemView.findViewById(R.id.item_recyclerview_infocartaoactivity_valor_compra);
-            this.data = itemView.findViewById(R.id.item_recyclerview_infocartaoactivity_data_compra);
-            this.parcelas = itemView.findViewById(R.id.item_recyclerview_infocartaoactivity_parcelas);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cursor.moveToPosition(getAdapterPosition());
-                    int idCompra = cursor.getInt(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry._ID));
-                    Uri uri = ContentUris.withAppendedId(ControleContract.ComprasEntry.URI_CONTENT, idCompra);
-                    Intent i = new Intent(v.getContext(), EditorActivity.class);
-                    i.setData(uri);
-                    v.getContext().startActivity(i);
-                }
-            });
+            titulo = itemView.findViewById(R.id.item_recyclerview_infocartaoactivity_titulo);
+            rv = itemView.findViewById(R.id.item_recyclerview_infocartaoactivity_recyclerview_interno);
         }
 
-        private void contruir(Cursor cursor){
-            String dataRecebida = this.getData(cursor);
+        public void contruir(String dia, String mes, String ano){
+            String data = dia + "/" + mes + "/" + ano;
             Date dataConvertida = null;
             try {
-                dataConvertida = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dataRecebida);
+                dataConvertida = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(data);
             } catch (ParseException e) {
-                Log.e("Erro", "ao converter a string data para tipo Date");
+                Log.e("ERRO", "ao converter string para data");
             }
-            String dataFormatada = new SimpleDateFormat("MMMM", new Locale("pt", "BR")).format(dataConvertida) + "/" +
-                    new SimpleDateFormat("yyyy", new Locale("pt", "BR")).format(dataConvertida);
+            String dataFormatada = new SimpleDateFormat("MMMM/yyyy", new Locale("pt", "br")).format(dataConvertida);
 
-            String mes = cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES));
-            if(primeiroTitulo){
-                alterarTitulo = mes;
-                primeiroTitulo = false;
-                this.tituloData.setText(dataFormatada);
-            } else if(!(alterarTitulo.equals(mes)) || getAdapterPosition() == 0){
-                alterarTitulo = mes;
-                this.tituloData.setText(dataFormatada);
-            } else {
-                this.tituloData.setVisibility(View.GONE);
-            }
-
-            this.descricao.setText(cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)));
-            String v = "R$ " + cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR));
-            this.valor.setText(v);
-            this.data.setText(dataRecebida);
-            String p = String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS))) + "x";
-            this.parcelas.setText(p);
-        }
-
-        private String getData(Cursor cursor){
-            StringBuilder data = new StringBuilder();
-            data.append(cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)));
-            data.append("/");
-            data.append(cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES)));
-            data.append("/");
-            data.append(cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_ANO)));
-            return data.toString();
+            titulo.setText(dataFormatada);
+            adapter = new InfoCartaoActivitySubitemAdapter(cursor, mes);
+            rv.setAdapter(adapter);
         }
     }
+
 }

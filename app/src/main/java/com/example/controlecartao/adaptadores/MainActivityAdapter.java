@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.controlecartao.AdicionarCartaoActivity;
 import com.example.controlecartao.InfoCartaoActivity;
 import com.example.controlecartao.R;
 import com.example.controlecartao.dados.ControleContract;
@@ -56,19 +58,29 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
 
         private TextView numeroCartao;
         private TextView nomeCartao;
+        private CardView card;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             numeroCartao = itemView.findViewById(R.id.item_recyclerview_mainactivity_numero_cartao);
             nomeCartao = itemView.findViewById(R.id.item_recyclerview_mainactivity_nome_cartao);
+            card = itemView.findViewById(R.id.item_recyclerview_mainactivity_card);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    cursor.moveToPosition(getAdapterPosition());
-                    int idCartao = cursor.getInt(cursor.getColumnIndexOrThrow(ControleContract.CartaoEntry._ID));
-                    Uri uri = ContentUris.withAppendedId(ControleContract.CartaoEntry.URI_CONTENT, idCartao);
+                    Uri uri = getUriCartao();
                     Intent i = new Intent(v.getContext(), InfoCartaoActivity.class);
+                    i.setData(uri);
+                    v.getContext().startActivity(i);
+                }
+            });
+
+            card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri uri = getUriCartao();
+                    Intent i = new Intent(v.getContext(), AdicionarCartaoActivity.class);
                     i.setData(uri);
                     v.getContext().startActivity(i);
                 }
@@ -81,6 +93,12 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             String nome = cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.CartaoEntry.COLUNA_NOME_CARTAO));
             numeroCartao.setText(numero);
             nomeCartao.setText(nome);
+        }
+
+        private Uri getUriCartao(){
+            cursor.moveToPosition(getAdapterPosition());
+            int idCartao = cursor.getInt(cursor.getColumnIndexOrThrow(ControleContract.CartaoEntry._ID));
+            return ContentUris.withAppendedId(ControleContract.CartaoEntry.URI_CONTENT, idCartao);
         }
 
     }

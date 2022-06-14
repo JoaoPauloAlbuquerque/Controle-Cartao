@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 public class ControleProvider extends ContentProvider {
 
@@ -22,6 +23,8 @@ public class ControleProvider extends ContentProvider {
     public static final int COMPRAS = 3;
     public static final int COMPRAS_ID = 4;
 
+    public static final int PARCELAS_ID = 5;
+
     public static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
@@ -30,6 +33,8 @@ public class ControleProvider extends ContentProvider {
 
         URI_MATCHER.addURI(ControleContract.AUTORIZADOR, ControleContract.PATH_COMPRAS, COMPRAS);
         URI_MATCHER.addURI(ControleContract.AUTORIZADOR, ControleContract.PATH_COMPRAS + "/#", COMPRAS_ID);
+
+        URI_MATCHER.addURI(ControleContract.AUTORIZADOR, ControleContract.PATH_PARCELAS + "/#", PARCELAS_ID);
     }
 
     private ControleDbHelp dbHelp;
@@ -75,6 +80,15 @@ public class ControleProvider extends ContentProvider {
                         String.valueOf(ContentUris.parseId(uri))
                 };
                 cursor = db.query(ControleContract.ComprasEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case PARCELAS_ID:
+                String currentSelection = selectionArgs[0];
+                selection = ControleContract.ParcelasEntry.COLUNA_FK_COMPRA + " = ? AND " + ControleContract.ParcelasEntry.COLUNA_MES + " = ?";
+                selectionArgs = new String[]{
+                        String.valueOf(ContentUris.parseId(uri)),
+                        currentSelection
+                };
+                cursor = db.query(ControleContract.ParcelasEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default:
                 throw new IllegalArgumentException("Erro ao fazer consulta no banco de dados;");
@@ -124,20 +138,29 @@ public class ControleProvider extends ContentProvider {
         if(parcelas > 1){
             for(int i = 0; i < parcelas; i++){
                 mes++;
-                ContentValues valores = this.setValores(idCompra, valorParcela, mes);
+                String m = String.valueOf(mes);
+                if(mes < 10){
+                    m = "0" + m;
+                }
+                ContentValues valores = this.setValores(idCompra, valorParcela, m);
                 db.insert(ControleContract.ParcelasEntry.NOME_TABELA, null, valores);
             }
         } else {
             mes++;  // Aumenta mais 1 no mes porque ele só vai pagar no próximo mês
-            ContentValues valores = this.setValores(idCompra, valorParcela, mes);
+            String m = String.valueOf(mes);
+            if(mes < 10){
+                m = "0" + m;
+            }
+            ContentValues valores = this.setValores(idCompra, valorParcela, m);
             db.insert(ControleContract.ParcelasEntry.NOME_TABELA, null, valores);
         }
     }
 
-    private ContentValues setValores(long idCompra, double valorParcela, int mes){
+    private ContentValues setValores(long idCompra, double valorParcela, String mes){
         ContentValues values = new ContentValues();
         values.put(ControleContract.ParcelasEntry.COLUNA_FK_COMPRA, Integer.parseInt(String.valueOf(idCompra)));
-        values.put(ControleContract.ParcelasEntry.COLUNA_VALOR_PARCELA, String.valueOf(new DecimalFormat("#.00").format(valorParcela)));
+        Locale.setDefault(Locale.US);
+        values.put(ControleContract.ParcelasEntry.COLUNA_VALOR_PARCELA, new DecimalFormat("#.00").format(valorParcela));
         values.put(ControleContract.ParcelasEntry.COLUNA_MES, mes);
         values.put(ControleContract.ParcelasEntry.COLUNA_ESTATOS, "dev");
         return values;
