@@ -35,6 +35,7 @@ public class InfoCartaoActivity extends AppCompatActivity implements LoaderManag
     private InfoCartaoActivityAdapter adapter;
 
     private TextView txtValor;
+    private TextView txtMes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class InfoCartaoActivity extends AppCompatActivity implements LoaderManag
         this.actionButton = findViewById(R.id.floatigactionbutton_infocartaoactivity);
         this.rv = findViewById(R.id.recyclerview_infocartaoactivity);
         this.txtValor = findViewById(R.id.txt_valor_mensal_infocartaoactivity);
+        this.txtMes = findViewById(R.id.txt_mes_total_infocartaoactivity);
     }
 
     @Override
@@ -128,6 +130,7 @@ public class InfoCartaoActivity extends AppCompatActivity implements LoaderManag
                     CalcUtils.convertDoubleToString(valor)
             ));
         }
+        this.txtMes.setText(CalcUtils.CalcularCompras.getMesPorExtenso());
         this.adapter.setCursor(data);
     }
 

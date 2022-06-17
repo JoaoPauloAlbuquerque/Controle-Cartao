@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlecartao.R;
 import com.example.controlecartao.dados.ControleContract;
-import com.example.controlecartao.objetos.Objeto;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,62 +22,56 @@ import java.util.Locale;
 public class InfoCartaoActivityAdapter extends RecyclerView.Adapter<InfoCartaoActivityAdapter.ItemMyViewHolder>{
 
     private Cursor cursor;
-    private ArrayList<Objeto> list;
+    public ArrayList<ArrayList<Integer>> list;
+
+    private int count;
+    private String ultimoMes;
+    private String mesAtual;
 
     public InfoCartaoActivityAdapter(Cursor cursor){
         this.cursor = cursor;
-        this.list = this.subtraiCursor(this.cursor);
+        this.ultimoMes = "00";
+        this.mesAtual = "00";
+        this.list = this.subtraiCursor();
     }
 
-    private ArrayList<Objeto> subtraiCursor(Cursor c){
-        if(c != null) {
-            ArrayList<Objeto> mList = new ArrayList<>();
-            String ultimoMesAnalizado = "00";
-            if(c.moveToFirst()) {
+    private ArrayList<ArrayList<Integer>> subtraiCursor(){
+
+        if(this.cursor != null) {
+            ArrayList<ArrayList<Integer>> lista = new ArrayList<>();
+            this.count = 0;
+            if(this.cursor.moveToFirst()) {
+                this.ultimoMes = this.cursor.getString(this.cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES));
+                this.mesAtual = this.cursor.getString(this.cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES));
                 do {
-                    if (ultimoMesAnalizado.equals("00")) {
-                        ultimoMesAnalizado = c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES));
-                        mList.add(
-                                new Objeto(
-                                        c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry._ID)),
-                                        c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)),
-                                        c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)),
-                                        c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)),
-                                        c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES)),
-                                        c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_ANO)),
-                                        c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS)),
-                                        c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_FK_CARTAO))
-                                )
-                        );
-                    } else {
-                        String mesAtual = c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES));
-                        if (!ultimoMesAnalizado.equals(mesAtual)) {
-                            ultimoMesAnalizado = mesAtual;
-                            mList.add(
-                                    new Objeto(
-                                            c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry._ID)),
-                                            c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)),
-                                            c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)),
-                                            c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)),
-                                            c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES)),
-                                            c.getString(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_ANO)),
-                                            c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS)),
-                                            c.getInt(c.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_FK_CARTAO))
-                                    )
-                            );
-                        }
-                    }
-                } while (c.moveToNext());
+                    lista.add(this.getList());
+                } while (this.cursor.moveToNext());
             }
-            return mList;
+            return lista;
         } else {
             return null;
         }
     }
 
+    private ArrayList<Integer> getList(){
+        ArrayList<Integer> list = new ArrayList<>();
+        while(this.ultimoMes.equals(this.mesAtual)){
+            list.add(this.count);
+            this.count++;
+            if(this.cursor.moveToNext()) {
+                this.mesAtual = this.cursor.getString(this.cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES));
+            } else {
+                break;
+            }
+        }
+        this.ultimoMes = this.mesAtual;
+        this.cursor.moveToPrevious();
+        return list;
+    }
+
     public void setCursor(Cursor cursor){
         this.cursor = cursor;
-        this.list = this.subtraiCursor(this.cursor);
+        this.list = this.subtraiCursor();
         notifyDataSetChanged();
     }
 
@@ -91,10 +84,11 @@ public class InfoCartaoActivityAdapter extends RecyclerView.Adapter<InfoCartaoAc
 
     @Override
     public void onBindViewHolder(@NonNull ItemMyViewHolder holder, int position) {
+        this.cursor.moveToPosition(this.list.get(position).get(0));
         holder.contruir(
-                this.list.get(position).getDia(),
-                this.list.get(position).getMes(),
-                this.list.get(position).getAno()
+                this.cursor.getString(this.cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)),
+                this.cursor.getString(this.cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES)),
+                this.cursor.getString(this.cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_ANO))
         );
     }
 
@@ -131,7 +125,7 @@ public class InfoCartaoActivityAdapter extends RecyclerView.Adapter<InfoCartaoAc
             String dataFormatada = new SimpleDateFormat("MMMM/yyyy", new Locale("pt", "br")).format(dataConvertida);
 
             titulo.setText(dataFormatada);
-            adapter = new InfoCartaoActivitySubitemAdapter(cursor, mes);
+            adapter = new InfoCartaoActivitySubitemAdapter(cursor, mes, list.get(getAdapterPosition()));
             rv.setAdapter(adapter);
         }
     }

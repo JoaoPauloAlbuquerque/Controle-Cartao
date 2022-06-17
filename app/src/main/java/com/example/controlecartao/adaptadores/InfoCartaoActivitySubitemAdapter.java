@@ -32,27 +32,12 @@ public class InfoCartaoActivitySubitemAdapter extends RecyclerView.Adapter<InfoC
 
     private Cursor cursor;
     private String mes;
-    private List<Integer> list;
+    private ArrayList<Integer> list;
 
-    public InfoCartaoActivitySubitemAdapter(Cursor cursor, String mes){
+    public InfoCartaoActivitySubitemAdapter(Cursor cursor, String mes, ArrayList<Integer> list){
         this.cursor = cursor;
         this.mes = mes;
-        this.list = this.getList(cursor, mes);
-    }
-
-    private List<Integer> getList(Cursor cursor, String mes){
-        List<Integer> lista = new ArrayList<>();
-        int count = 0;
-        if(this.cursor.moveToFirst()) {
-            do {
-                String m = cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES));
-                if (mes.equals(m)) {
-                    lista.add(count);
-                }
-                count++;
-            } while (this.cursor.moveToNext());
-        }
-        return lista;
+        this.list = list;
     }
 
     @NonNull

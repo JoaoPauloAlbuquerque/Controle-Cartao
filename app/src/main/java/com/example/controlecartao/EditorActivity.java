@@ -7,18 +7,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.app.LoaderManager;
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Loader;
-import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
@@ -26,8 +25,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlecartao.dados.ControleContract;
+import com.example.controlecartao.utils.CalcUtils;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -79,6 +80,47 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             @Override
             public void onClick(View v) {
                 onCreateDataPicker();
+            }
+        });
+
+        this.valorCompra.addTextChangedListener(new TextWatcher() {
+            private boolean isUpdating = false;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(this.isUpdating){
+                    this.isUpdating = false;
+                    return;
+                }
+
+                this.isUpdating = true;
+                String string = s.toString();
+                String currentString = string;
+                if(string.contains(",") || string.contains(".")){
+                    currentString = string.replace(",", "");
+                    currentString = currentString.replace(".", "");
+                }
+
+                Log.e("currentString", currentString);
+                try {
+                    Locale.setDefault(new Locale("pt", "br"));
+                    String valor = new DecimalFormat("###,##0.00").format(Double.parseDouble(currentString) / 100);
+                    valorCompra.setText(valor);
+                    valorCompra.setSelection(valor.length());
+                } catch (Exception e){
+                    Log.e("ERRO", "erro ao converter string para double: " + e);
+                    valorCompra.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -155,12 +197,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         values.put(ControleContract.ComprasEntry.COLUNA_DIA, data[0]);
         values.put(ControleContract.ComprasEntry.COLUNA_MES, data[1]);
         values.put(ControleContract.ComprasEntry.COLUNA_ANO, data[2]);
-        values.put(ControleContract.ComprasEntry.COLUNA_VALOR, this.valorCompra.getText().toString().trim());
+        values.put(ControleContract.ComprasEntry.COLUNA_VALOR, CalcUtils.replaceSimbolosValorToDb(this.valorCompra.getText().toString().trim()));
         values.put(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS, Integer.parseInt(this.parcelas.getText().toString().trim()));
 
 
         // Se for passado apenas o caminho do cartão, eu vou inserir um novo item
-        if(this.uri.getPath().split("/")[1].equals(ControleContract.PATH_CARTAO)){  // Estou pegando apenas o nome da tabela e comparando com o nome das tabela "cartao"
+        if(this.uri.getPath().split("/")[1].equals(ControleContract.PATH_CARTAO)){  // Estou pegando apenas o nome da tabela e comparando com o nome da tabela "cartao"
             values.put(ControleContract.ComprasEntry.COLUNA_FK_CARTAO, Integer.parseInt(String.valueOf(ContentUris.parseId(this.uri))));
             Uri uriInsert = getContentResolver().insert(ControleContract.ComprasEntry.URI_CONTENT, values);
             if(ContentUris.parseId(uriInsert) != 0){
@@ -218,7 +260,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if(data.moveToNext()){
             this.ondeComprou.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)));
-            this.valorCompra.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)));
+            this.valorCompra.setText(
+                    CalcUtils.convertValoresDbToEditText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)))
+            );
             this.parcelas.setText(String.valueOf(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS))));
             StringBuilder dataFormatada = new StringBuilder();
             dataFormatada.append(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)));

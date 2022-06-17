@@ -11,16 +11,10 @@
     <!-- Cores personalizadas do app -->
 
     <color name="branco">#F1F5F7</color>
-
     <color name="preto">#212121</color>
-
     <color name="azul">#03A9F4</color>
-
     <color name="azul_escuro">#0186C4</color>
-
     <color name="cinza">#ACACAC</color>
-
     <color name="cinza_claro">#E2E2E2</color>
-
     <color name="status_bar">#0288D1</color>
 </resources>

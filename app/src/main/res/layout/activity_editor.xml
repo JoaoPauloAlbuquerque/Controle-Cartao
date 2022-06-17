@@ -32,7 +32,7 @@
             <EditText
                 android:id="@+id/edittext_onde_comprou_editoactivity"
                 style="@style/edittext"
-                android:inputType="text" />
+                android:inputType="textCapSentences|textAutoCorrect" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -58,7 +58,7 @@
             <EditText
                 android:id="@+id/edittext_valor_compra_editoactivity"
                 style="@style/edittext"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:maxLength="10" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,7 +86,7 @@
                 android:id="@+id/edittext_quantidade_parcelas_editoactivity"
                 style="@style/edittext"
                 android:inputType="number"
-                android:maxLength="2" />
+                android:maxLength="3" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
