@@ -106,7 +106,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     currentString = currentString.replace(".", "");
                 }
 
-                Log.e("currentString", currentString);
                 try {
                     Locale.setDefault(new Locale("pt", "br"));
                     String valor = new DecimalFormat("###,##0.00").format(Double.parseDouble(currentString) / 100);
@@ -192,7 +191,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private void inserirCompra(){
         ContentValues values = new ContentValues();
 
-        String[] data = this.getData();
+        String[] data = this.dataCompra.getText().toString().trim().split("/");
         values.put(ControleContract.ComprasEntry.COLUNA_DESCRICAO, this.ondeComprou.getText().toString().trim());
         values.put(ControleContract.ComprasEntry.COLUNA_DIA, data[0]);
         values.put(ControleContract.ComprasEntry.COLUNA_MES, data[1]);
@@ -232,14 +231,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 Toast.makeText(this, "Erro ao deletar compra", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private String[] getData(){
-        String[] data = this.dataCompra.getText().toString().trim().split("/");
-        Log.e("dia", this.dataCompra.getText().toString().trim().split("/")[0]);
-        Log.e("mes", this.dataCompra.getText().toString().trim().split("/")[1]);
-        Log.e("ano", this.dataCompra.getText().toString().split("/")[2]);
-        return data;
     }
 
     @Override

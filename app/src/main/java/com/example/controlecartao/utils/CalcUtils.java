@@ -2,16 +2,11 @@ package com.example.controlecartao.utils;
 
 import android.content.ContentUris;
 import android.content.Context;
-import android.database.ContentObservable;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
-import androidx.versionedparcelable.VersionedParcel;
-
 import com.example.controlecartao.dados.ControleContract;
-import com.example.controlecartao.dados.ControleDbHelp;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -58,13 +53,13 @@ public class CalcUtils {
         try{
             double v = Double.parseDouble(valor);
             String str = String.valueOf(v);
-            if(isConvertDoubleToInt(v)){
+            if(isInt(v)){
                 int i = (int) v;
                 str = String.valueOf(i);
             }
             return new DecimalFormat("###,##0.00").format(Double.parseDouble(str));
         } catch (Exception e){
-            Log.e("ERRO", "ao converter double para string");
+            Log.e("ERRO", "ao converter double para string" + e);
             return "0,00";
         }
     }
@@ -89,19 +84,15 @@ public class CalcUtils {
      */
     public static String convertValoresDbToEditText(String s){
         double v = Double.parseDouble(s) * 100;
-        if(isConvertDoubleToInt(v)){
+        if(isInt(v)){
             int i = (int) v;
             return String.valueOf(i);
         }
         return String.valueOf(v);
     }
 
-    private static boolean isConvertDoubleToInt(double d){
-        try{
-            return (d % 1) == 0;
-        } catch (Exception e){
-            return false;
-        }
+    private static boolean isInt(double d){
+        return (d % 1) == 0;
     }
 
     /**
