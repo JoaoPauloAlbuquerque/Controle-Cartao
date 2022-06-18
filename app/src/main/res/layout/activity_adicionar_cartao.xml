@@ -25,7 +25,7 @@
         <EditText
             android:id="@+id/edittext_nome_cartao_adicionarcartaoactivity"
             style="@style/edittext"
-            android:inputType="text" />
+            android:inputType="textCapSentences|textAutoCorrect" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

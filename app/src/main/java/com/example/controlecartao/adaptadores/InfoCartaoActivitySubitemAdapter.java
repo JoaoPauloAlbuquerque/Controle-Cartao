@@ -99,7 +99,7 @@ public class InfoCartaoActivitySubitemAdapter extends RecyclerView.Adapter<InfoC
             this.descricao.setText(cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)));
             this.valor.setText(
                     CalcUtils.convertValueToCifrao(
-                            CalcUtils.convertDoubleToString(cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)))
+                            CalcUtils.convertDoubleToString(itemView.getContext(), cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)))
                     )
             );
             this.data.setText(data);

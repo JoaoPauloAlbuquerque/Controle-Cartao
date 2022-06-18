@@ -103,7 +103,7 @@
 
     <!-- Strings de uso geral no app -->
 
-    <string name="cifrao">R$</string>
+    <string name="cifrao">$</string>
     <string name="mes">Mês</string>
     <string name="desconhecido">(Desconhecido)</string>
     <string name="zeros">0000</string>

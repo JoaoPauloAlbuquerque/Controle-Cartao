@@ -4,6 +4,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import com.example.controlecartao.dados.ControleContract;
@@ -16,15 +17,7 @@ import java.util.Locale;
 
 public class CalcUtils {
 
-    public static Double convertStringToDouble(String valor){
-        String valorConvertido = valor.replace(".", "");
-        try{
-            return Double.parseDouble(valorConvertido.replace(",", "."));
-        } catch (Exception e){
-            Log.e("ERRO", "ao converter string para double");
-            return 0.00;
-        }
-    }
+
 
     /**
      * Formata os valores para o formato pt-br adicionando vírgulas e pontos,
@@ -32,8 +25,8 @@ public class CalcUtils {
      * @param valor valor que será convertido
      * @return
      */
-    public static String convertDoubleToString(Double valor){
-        Locale.setDefault(new Locale("pt", "br"));
+    public static String convertDoubleToString(Context context, Double valor){
+        Locale.setDefault(getLocale(context));
         try{
             return new DecimalFormat("###,##0.00").format(valor);
         } catch (Exception e){
@@ -48,8 +41,8 @@ public class CalcUtils {
      * @param valor valor que será convertido
      * @return
      */
-    public static String convertDoubleToString(String valor){
-        Locale.setDefault(new Locale("pt", "br"));
+    public static String convertDoubleToString(Context context, String valor){
+        Locale.setDefault(getLocale(context));
         try{
             double v = Double.parseDouble(valor);
             String str = String.valueOf(v);
@@ -102,7 +95,39 @@ public class CalcUtils {
      * @return
      */
     public static String convertValueToCifrao(String valor){
-        return "R$ " + valor;
+        return "$ " + valor;
+    }
+
+    public static Locale getLocale(Context context){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            Log.e("API > 24", context.getResources().getConfiguration().getLocales().get(0).toString());
+            return context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            Log.e("API < 24", context.getResources().getConfiguration().locale.toString());
+            return context.getResources().getConfiguration().locale;
+        }
+    }
+
+    public static String getMes(){
+        Date data = new Date();
+        String dataFormatadaString = new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(data);
+        try {
+            return new SimpleDateFormat("MM", Locale.US).format(new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dataFormatadaString));
+        } catch (ParseException e) {
+            Log.e("ERRO", "ao objeter data");
+            return "";
+        }
+    }
+
+    public static String getMesPorExtenso(){
+        Date data = new Date();
+        String dataFormatadaString = new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(data);
+        try {
+            return new SimpleDateFormat("MMMM", new Locale("pt", "br")).format(new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dataFormatadaString));
+        } catch (ParseException e) {
+            Log.e("ERRO", "ao objeter data");
+            return "";
+        }
     }
 
     public static class CalcularCompras{
@@ -128,28 +153,6 @@ public class CalcUtils {
                 c.close();
             }
             return valor;
-        }
-
-        public static String getMes(){
-            Date data = new Date();
-            String dataFormatadaString = new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(data);
-            try {
-                return new SimpleDateFormat("MM", Locale.US).format(new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dataFormatadaString));
-            } catch (ParseException e) {
-                Log.e("ERRO", "ao objeter data");
-                return "";
-            }
-        }
-
-        public static String getMesPorExtenso(){
-            Date data = new Date();
-            String dataFormatadaString = new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(data);
-            try {
-                return new SimpleDateFormat("MMMM", new Locale("pt", "br")).format(new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dataFormatadaString));
-            } catch (ParseException e) {
-                Log.e("ERRO", "ao objeter data");
-                return "";
-            }
         }
     }
 

@@ -13,6 +13,7 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -38,10 +39,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     private Uri uri;
 
-    private EditText ondeComprou;
-    private EditText valorCompra;
-    private EditText parcelas;
-    private EditText dataCompra;
+    private EditText editOndeComprou;
+    private EditText editValorCompra;
+    private EditText editParcelas;
+    private EditText editDataCompra;
 
     private TextInputLayout layoutTextInputData;
 
@@ -83,13 +84,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             }
         });
 
-        this.valorCompra.addTextChangedListener(new TextWatcher() {
+        this.editValorCompra.addTextChangedListener(new TextWatcher() {
             private boolean isUpdating = false;
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -107,14 +106,52 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 }
 
                 try {
-                    Locale.setDefault(new Locale("pt", "br"));
+                    Locale.setDefault(CalcUtils.getLocale(EditorActivity.this));
                     String valor = new DecimalFormat("###,##0.00").format(Double.parseDouble(currentString) / 100);
-                    valorCompra.setText(valor);
-                    valorCompra.setSelection(valor.length());
+                    editValorCompra.setText(valor);
+                    editValorCompra.setSelection(valor.length());
                 } catch (Exception e){
                     Log.e("ERRO", "erro ao converter string para double: " + e);
-                    valorCompra.setText("");
+                    editValorCompra.setText("");
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        this.editDataCompra.addTextChangedListener(new TextWatcher() {
+            private boolean isUpdating = false;
+            private String currentData = "";
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                this.currentData = s.toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(this.isUpdating){
+                    this.isUpdating = false;
+                    return;
+                }
+                this.isUpdating = true;
+
+                if(this.currentData.length() > s.length()){
+                    if(s.length() == 5 || s.length() == 2) return;
+                }
+
+                StringBuilder str = new StringBuilder(s.toString().replace("/", ""));
+                if(str.toString().length() >= 2){
+                    str.insert(2, "/");
+                }
+                if(str.toString().length() >= 5){
+                    str.insert(5, "/");
+                }
+                editDataCompra.setText(str.toString());
+                editDataCompra.setSelection(str.toString().length());
             }
 
             @Override
@@ -125,7 +162,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     private void onCreateDataPicker(){
-        Locale.setDefault(new Locale("pt", "BR"));
+        Locale.setDefault(CalcUtils.getLocale(this));
         DatePickerDialog dataPicker = new DatePickerDialog(
                 EditorActivity.this,                        // Contexto
                 new DatePickerDialog.OnDateSetListener() {         // OnDateSetListener
@@ -141,7 +178,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                             mes = "0" + mes;
                         }
                         String data = dia + "/" + mes + "/" + ano;
-                        dataCompra.setText(data);
+                        editDataCompra.setText(data);
                     }
                 },
                 Calendar.getInstance().get(Calendar.YEAR),          // Uma instancia de Calendar para o Ano (AQUI É SELECIONADO O ANO ATUAL DA MAQUINA)
@@ -152,10 +189,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     private void iniComponentes(){
-        this.ondeComprou = findViewById(R.id.edittext_onde_comprou_editoactivity);
-        this.valorCompra = findViewById(R.id.edittext_valor_compra_editoactivity);
-        this.parcelas = findViewById(R.id.edittext_quantidade_parcelas_editoactivity);
-        this.dataCompra = findViewById(R.id.edittext_data_compra_editoactivity);
+        this.editOndeComprou = findViewById(R.id.edittext_onde_comprou_editoactivity);
+        this.editValorCompra = findViewById(R.id.edittext_valor_compra_editoactivity);
+        this.editParcelas = findViewById(R.id.edittext_quantidade_parcelas_editoactivity);
+        this.editDataCompra = findViewById(R.id.edittext_data_compra_editoactivity);
         this.layoutTextInputData = findViewById(R.id.layout_edittext_data_compra_editoractivity);
         this.botaoSalvar = findViewById(R.id.botao_salvar_editoractivity);
     }
@@ -191,13 +228,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private void inserirCompra(){
         ContentValues values = new ContentValues();
 
-        String[] data = this.dataCompra.getText().toString().trim().split("/");
-        values.put(ControleContract.ComprasEntry.COLUNA_DESCRICAO, this.ondeComprou.getText().toString().trim());
+        String[] data = this.editDataCompra.getText().toString().trim().split("/");
+        values.put(ControleContract.ComprasEntry.COLUNA_DESCRICAO, this.editOndeComprou.getText().toString().trim());
         values.put(ControleContract.ComprasEntry.COLUNA_DIA, data[0]);
         values.put(ControleContract.ComprasEntry.COLUNA_MES, data[1]);
         values.put(ControleContract.ComprasEntry.COLUNA_ANO, data[2]);
-        values.put(ControleContract.ComprasEntry.COLUNA_VALOR, CalcUtils.replaceSimbolosValorToDb(this.valorCompra.getText().toString().trim()));
-        values.put(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS, Integer.parseInt(this.parcelas.getText().toString().trim()));
+        values.put(ControleContract.ComprasEntry.COLUNA_VALOR, CalcUtils.replaceSimbolosValorToDb(this.editValorCompra.getText().toString().trim()));
+        values.put(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS, Integer.parseInt(this.editParcelas.getText().toString().trim()));
 
 
         // Se for passado apenas o caminho do cartão, eu vou inserir um novo item
@@ -250,26 +287,26 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if(data.moveToNext()){
-            this.ondeComprou.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)));
-            this.valorCompra.setText(
+            this.editOndeComprou.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)));
+            this.editValorCompra.setText(
                     CalcUtils.convertValoresDbToEditText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)))
             );
-            this.parcelas.setText(String.valueOf(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS))));
+            this.editParcelas.setText(String.valueOf(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS))));
             StringBuilder dataFormatada = new StringBuilder();
             dataFormatada.append(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DIA)));
             dataFormatada.append("/");
             dataFormatada.append(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_MES)));
             dataFormatada.append("/");
             dataFormatada.append(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_ANO)));
-            this.dataCompra.setText(dataFormatada.toString());
+            this.editDataCompra.setText(dataFormatada.toString());
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        this.ondeComprou.setText("");
-        this.valorCompra.setText("");
-        this.parcelas.setText("");
-        this.dataCompra.setText("");
+        this.editOndeComprou.setText("");
+        this.editValorCompra.setText("");
+        this.editParcelas.setText("");
+        this.editDataCompra.setText("");
     }
 }

@@ -127,10 +127,10 @@ public class InfoCartaoActivity extends AppCompatActivity implements LoaderManag
             this.txtValor.setText("R$ 0.00");
         } else {
             this.txtValor.setText(CalcUtils.convertValueToCifrao(
-                    CalcUtils.convertDoubleToString(valor)
+                    CalcUtils.convertDoubleToString(this, valor)
             ));
         }
-        this.txtMes.setText(CalcUtils.CalcularCompras.getMesPorExtenso());
+        this.txtMes.setText(CalcUtils.getMesPorExtenso());
         this.adapter.setCursor(data);
     }
 
