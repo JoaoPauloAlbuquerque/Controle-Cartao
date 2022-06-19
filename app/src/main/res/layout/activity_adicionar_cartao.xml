@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/branco"
+    android:background="@android:color/white"
     tools:context=".AdicionarCartaoActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -39,7 +38,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edittext_dia_pagamento_adicionarcartaoactivity"
-            style="@style/color_barra_edittext"
+            style="@style/edittext_layou"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -59,7 +58,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_edittext_dia_fechamento_adicionarcartaoactivity"
-            style="@style/color_barra_edittext"
+            style="@style/edittext_layou"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
