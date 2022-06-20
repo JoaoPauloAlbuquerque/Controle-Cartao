@@ -12,7 +12,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.controlecartao.utils.CalcUtils;
+
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class ControleProvider extends ContentProvider {
@@ -53,11 +57,11 @@ public class ControleProvider extends ContentProvider {
 
         int match = URI_MATCHER.match(uri);
         switch(match){
-            // Se eu passar apenas o nome da tabela cartao, seleciono todos os cartões
+            // Se eu passar apenas o nome da tabela cartao no URI, seleciono todos os cartões
             case CARTAO:
                 cursor = db.query(ControleContract.CartaoEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
-            // Se eu passar o nome da tabela cartao e um id, eu seleciono apenas 1 cartao
+            // Se eu passar o nome da tabela cartao e um id no URI, eu seleciono apenas 1 cartao
             case CARTAO_ID:
                 selection = ControleContract.CartaoEntry._ID + " = ?";
                 selectionArgs = new String[]{
@@ -65,7 +69,7 @@ public class ControleProvider extends ContentProvider {
                 };
                 cursor = db.query(ControleContract.CartaoEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
-            // Se eu passar apenas o nome da tabela compras, então eu vou passar o id do cartão no selectionArgs, assim, eu seleciono todos as compras do cartão
+            // Se eu passar apenas o nome da tabela compras no URI, então eu devo passar o id do cartão no selectionArgs, assim, eu seleciono todos as compras do cartão
             case COMPRAS:
                 selection = ControleContract.ComprasEntry.COLUNA_FK_CARTAO + " = ?";
                 sortOrder = ControleContract.ComprasEntry.COLUNA_ANO + " DESC, " +
@@ -73,7 +77,7 @@ public class ControleProvider extends ContentProvider {
                         ControleContract.ComprasEntry.COLUNA_DIA + " DESC";
                 cursor = db.query(ControleContract.ComprasEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
-            // Se eu passar o id ca compra, seleciono apenas ela
+            // Se eu passar o id da compra no URI, seleciono apenas uma compra
             case COMPRAS_ID:
                 selection = ControleContract.ComprasEntry._ID + " = ?";
                 selectionArgs = new String[]{
@@ -81,6 +85,7 @@ public class ControleProvider extends ContentProvider {
                 };
                 cursor = db.query(ControleContract.ComprasEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
+            // Para poder selecionar a tabela Parcelas, eu preciso passar apenas o nome da tabela parcelas e o ID da compra no URI, e preciso passar o mes no selectionArgs
             case PARCELAS_ID:
                 String currentSelection = selectionArgs[0];
                 selection = ControleContract.ParcelasEntry.COLUNA_FK_COMPRA + " = ? AND " + ControleContract.ParcelasEntry.COLUNA_MES + " = ?";
@@ -112,9 +117,9 @@ public class ControleProvider extends ContentProvider {
         int match = URI_MATCHER.match(uri);
         switch(match){
             case CARTAO:
-                long idCartao = db.insert(ControleContract.CartaoEntry.NOME_TABELA, null, values);
+                long id = db.insert(ControleContract.CartaoEntry.NOME_TABELA, null, values);
                 getContext().getContentResolver().notifyChange(uri, null);
-                return ContentUris.withAppendedId(uri, idCartao);
+                return ContentUris.withAppendedId(uri, id);
             case COMPRAS:
 //                long idCompra = db.insert(ControleContract.ComprasEntry.NOME_TABELA, null, values);
 //                getContext().getContentResolver().notifyChange(uri, null);
@@ -134,6 +139,12 @@ public class ControleProvider extends ContentProvider {
         double valorCompra = Double.parseDouble(values.getAsString(ControleContract.ComprasEntry.COLUNA_VALOR));
         double valorParcela = valorCompra / parcelas;
         int mes = values.getAsInteger(ControleContract.ComprasEntry.COLUNA_MES);
+        int diaCompra = values.getAsInteger(ControleContract.ComprasEntry.COLUNA_DIA);
+        int diaFechamentoCartao = this.getDiaFechamento(db, idCompra);
+
+        if(diaCompra <= diaFechamentoCartao){
+            mes--;
+        }
 
         if(parcelas > 1){
             for(int i = 0; i < parcelas; i++){
@@ -159,11 +170,20 @@ public class ControleProvider extends ContentProvider {
     private ContentValues setValores(long idCompra, double valorParcela, String mes){
         ContentValues values = new ContentValues();
         values.put(ControleContract.ParcelasEntry.COLUNA_FK_COMPRA, Integer.parseInt(String.valueOf(idCompra)));
-        Locale.setDefault(Locale.US);
-        values.put(ControleContract.ParcelasEntry.COLUNA_VALOR_PARCELA, new DecimalFormat("#.00").format(valorParcela));
+        Locale.setDefault(Locale.US);   // Tem que ser no formato interncional, para que seja inserido o valor com o separador de casas decimais "." (ponto)
+        values.put(ControleContract.ParcelasEntry.COLUNA_VALOR_PARCELA, new DecimalFormat("###,##0.00").format(valorParcela));
         values.put(ControleContract.ParcelasEntry.COLUNA_MES, mes);
         values.put(ControleContract.ParcelasEntry.COLUNA_ESTATOS, "dev");
         return values;
+    }
+
+    private int getDiaFechamento(SQLiteDatabase db, long idCompra){
+        Cursor cursorCompras = db.query(ControleContract.ComprasEntry.NOME_TABELA, ControleContract.ComprasEntry.getArrayColunms(), ControleContract.ComprasEntry._ID + " = ?", new String[]{String.valueOf(idCompra)}, null, null, null);
+        cursorCompras.moveToFirst();
+        int idCartao = Integer.parseInt(cursorCompras.getString(cursorCompras.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_FK_CARTAO)));
+        Cursor cursorCartao = db.query(ControleContract.CartaoEntry.NOME_TABELA, ControleContract.CartaoEntry.getArrayColunms(), ControleContract.CartaoEntry._ID + " = ?", new String[]{String.valueOf(idCartao)}, null, null, null);
+        cursorCartao.moveToFirst();
+        return Integer.parseInt(cursorCartao.getString(cursorCartao.getColumnIndexOrThrow(ControleContract.CartaoEntry.COLUNA_DIA_FECHAMENTO)));
     }
 
     @Override

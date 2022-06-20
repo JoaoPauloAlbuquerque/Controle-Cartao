@@ -124,13 +124,13 @@ public class InfoCartaoActivity extends AppCompatActivity implements LoaderManag
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         double valor = CalcUtils.CalcularCompras.calcular(data, this);
         if(valor == 0.0f){
-            this.txtValor.setText("R$ 0.00");
+            this.txtValor.setText("R$ 0,00");
         } else {
             this.txtValor.setText(CalcUtils.convertValueToCifrao(
                     CalcUtils.convertDoubleToString(this, valor)
             ));
         }
-        this.txtMes.setText(CalcUtils.getMesPorExtenso());
+        this.txtMes.setText(CalcUtils.getMesPorExtenso(this));
         this.adapter.setCursor(data);
     }
 

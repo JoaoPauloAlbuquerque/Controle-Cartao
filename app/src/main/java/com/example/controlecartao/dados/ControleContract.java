@@ -23,6 +23,15 @@ public class ControleContract {
         public static final String COLUNA_DIA_FECHAMENTO = "dia_fechamento";
         public static final String COLUNA_NUMERO_FINAL_CARTAO = "n_final";
 
+        public static String[] getArrayColunms(){
+            return new String[]{_ID,
+                    COLUNA_NOME_CARTAO,
+                    COLUNA_DIA_PAGAMENTO,
+                    COLUNA_DIA_FECHAMENTO,
+                    COLUNA_NUMERO_FINAL_CARTAO
+            };
+        }
+
     }
 
     public static final class ComprasEntry implements BaseColumns {
@@ -40,6 +49,17 @@ public class ControleContract {
         public static final String COLUNA_QUANTIDADE_PARCELAS = "qtd_parcelas";
         public static final String COLUNA_FK_CARTAO = "fk_cartao";
 
+        public static String[] getArrayColunms(){
+            return new String[]{_ID,
+                    COLUNA_DESCRICAO,
+                    COLUNA_VALOR,
+                    COLUNA_DIA,
+                    COLUNA_MES,
+                    COLUNA_ANO,
+                    COLUNA_QUANTIDADE_PARCELAS,
+                    COLUNA_FK_CARTAO
+            };
+        }
     }
 
     public static final class ParcelasEntry implements BaseColumns {
@@ -52,6 +72,15 @@ public class ControleContract {
         public static final String COLUNA_VALOR_PARCELA = "valor_parcela";
         public static final String COLUNA_MES = "mes";
         public static final String COLUNA_ESTATOS = "estatos";
+
+        public static String[] getArrayColunms(){
+            return new String[]{_ID,
+                    COLUNA_FK_COMPRA,
+                    COLUNA_VALOR_PARCELA,
+                    COLUNA_MES,
+                    COLUNA_ESTATOS
+            };
+        }
 
     }
 

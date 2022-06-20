@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.app.DatePickerDialog;
 import android.app.LoaderManager;
@@ -12,6 +13,7 @@ import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.controlecartao.dados.ControleContract;
@@ -43,6 +46,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private EditText editValorCompra;
     private EditText editParcelas;
     private EditText editDataCompra;
+    private TextView txtCifrao;
+    private TextView txtXParcelas;
 
     private TextInputLayout layoutTextInputData;
 
@@ -159,6 +164,46 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
             }
         });
+
+        this.editValorCompra.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                txtCifrao.setTextColor(getColorChangeListenerEditText(hasFocus));
+            }
+        });
+
+        this.editParcelas.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                txtXParcelas.setTextColor(getColorChangeListenerEditText(hasFocus));
+            }
+        });
+
+        this.layoutTextInputData.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                layoutTextInputData.getEndIconDrawable().setTint(getColorChangeListenerEditText(hasFocus));
+            }
+        });
+    }
+
+    private int getColorChangeListenerEditText(boolean hasFocus){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            return hasFocus ? getColor(R.color.azul) : getColor(R.color.cinza);
+        } else {
+            return hasFocus ? ContextCompat.getColor(EditorActivity.this, R.color.azul) : ContextCompat.getColor(EditorActivity.this, R.color.cinza);
+        }
+    }
+
+    private void iniComponentes(){
+        this.editOndeComprou = findViewById(R.id.edittext_onde_comprou_editoactivity);
+        this.editValorCompra = findViewById(R.id.edittext_valor_compra_editoactivity);
+        this.editParcelas = findViewById(R.id.edittext_quantidade_parcelas_editoactivity);
+        this.editDataCompra = findViewById(R.id.edittext_data_compra_editoactivity);
+        this.layoutTextInputData = findViewById(R.id.layout_edittext_data_compra_editoractivity);
+        this.botaoSalvar = findViewById(R.id.botao_salvar_editoractivity);
+        this.txtCifrao = findViewById(R.id.txt_cifrao_editoractivity);
+        this.txtXParcelas = findViewById(R.id.txt_x_parcelas_editoractivity);
     }
 
     private void onCreateDataPicker(){
@@ -186,15 +231,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)   // Uma instancia de Calendar para o Dia (AQUI É SELECIONADO O DIA ATUAL DA MAQUINA)
         );
         dataPicker.show();
-    }
-
-    private void iniComponentes(){
-        this.editOndeComprou = findViewById(R.id.edittext_onde_comprou_editoactivity);
-        this.editValorCompra = findViewById(R.id.edittext_valor_compra_editoactivity);
-        this.editParcelas = findViewById(R.id.edittext_quantidade_parcelas_editoactivity);
-        this.editDataCompra = findViewById(R.id.edittext_data_compra_editoactivity);
-        this.layoutTextInputData = findViewById(R.id.layout_edittext_data_compra_editoractivity);
-        this.botaoSalvar = findViewById(R.id.botao_salvar_editoractivity);
     }
 
     @Override

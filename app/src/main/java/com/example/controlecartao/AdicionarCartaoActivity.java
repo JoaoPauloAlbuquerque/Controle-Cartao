@@ -105,9 +105,9 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
     private void inserirCartao(){
         ContentValues values = new ContentValues();
         String nome = this.nomeCartao.getText().toString().trim();
-        int diaP = Integer.parseInt(this.diaPagamento.getText().toString().trim());
-        int diaF = Integer.parseInt(this.diaFechamento.getText().toString().trim());
-        int numero = Integer.parseInt(this.numeroCartao.getText().toString().trim());
+        String diaP = this.diaPagamento.getText().toString().trim();
+        String diaF = this.diaFechamento.getText().toString().trim();
+        String numero = this.numeroCartao.getText().toString().trim();
         values.put(ControleContract.CartaoEntry.COLUNA_NOME_CARTAO, nome);
         values.put(ControleContract.CartaoEntry.COLUNA_DIA_PAGAMENTO, diaP);
         values.put(ControleContract.CartaoEntry.COLUNA_DIA_FECHAMENTO, diaF);
