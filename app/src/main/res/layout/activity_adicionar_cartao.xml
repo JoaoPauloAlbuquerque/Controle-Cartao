@@ -6,19 +6,26 @@
     android:background="@android:color/white"
     tools:context=".AdicionarCartaoActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_adicionarcartaoactivity"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarlayout_adicionarcartaoactivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@color/azul"
-        android:elevation="4dp"
-        android:theme="@style/Theme.MaterialComponents"/>
+        android:layout_alignParentTop="true">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_adicionarcartaoactivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/azul"
+            android:elevation="4dp"
+            android:theme="@style/Theme.MaterialComponents" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_edittext_nome_cartao_adicionarcartaoactivity"
         style="@style/edittext_layou"
-        android:layout_below="@id/toolbar_adicionarcartaoactivity"
+        android:layout_below="@id/appbarlayout_adicionarcartaoactivity"
         android:hint="@string/hint_nome_do_cartao_adicionarcartaoactivity">
 
         <EditText

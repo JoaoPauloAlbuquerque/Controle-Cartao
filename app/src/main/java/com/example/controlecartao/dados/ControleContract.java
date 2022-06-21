@@ -71,14 +71,19 @@ public class ControleContract {
         public static final String COLUNA_FK_COMPRA = "fk_compra";
         public static final String COLUNA_VALOR_PARCELA = "valor_parcela";
         public static final String COLUNA_MES = "mes";
-        public static final String COLUNA_ESTATOS = "estatos";
+        public static final String COLUNA_ANO = "ano";
+        public static final String COLUNA_ESTATUS = "estatus";
+
+        public static final String ESTATUS_COMPRA_DEV = "dev";
+        public static final String ESTATUS_COMPRA_PAG = "pag";
 
         public static String[] getArrayColunms(){
             return new String[]{_ID,
                     COLUNA_FK_COMPRA,
                     COLUNA_VALOR_PARCELA,
                     COLUNA_MES,
-                    COLUNA_ESTATOS
+                    COLUNA_ANO,
+                    COLUNA_ESTATUS
             };
         }
 

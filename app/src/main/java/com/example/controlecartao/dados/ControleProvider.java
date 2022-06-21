@@ -12,11 +12,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.controlecartao.utils.CalcUtils;
-
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class ControleProvider extends ContentProvider {
@@ -87,11 +83,13 @@ public class ControleProvider extends ContentProvider {
                 break;
             // Para poder selecionar a tabela Parcelas, eu preciso passar apenas o nome da tabela parcelas e o ID da compra no URI, e preciso passar o mes no selectionArgs
             case PARCELAS_ID:
-                String currentSelection = selectionArgs[0];
-                selection = ControleContract.ParcelasEntry.COLUNA_FK_COMPRA + " = ? AND " + ControleContract.ParcelasEntry.COLUNA_MES + " = ?";
+                String currentSelectionMes = selectionArgs[0];
+                String currentSelectionAno = selectionArgs[1];
+                selection = ControleContract.ParcelasEntry.COLUNA_FK_COMPRA + " = ? AND " + ControleContract.ParcelasEntry.COLUNA_MES + " = ? AND " + ControleContract.ParcelasEntry.COLUNA_ANO + " = ?";
                 selectionArgs = new String[]{
                         String.valueOf(ContentUris.parseId(uri)),
-                        currentSelection
+                        currentSelectionMes,
+                        currentSelectionAno
                 };
                 cursor = db.query(ControleContract.ParcelasEntry.NOME_TABELA, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
@@ -139,6 +137,7 @@ public class ControleProvider extends ContentProvider {
         double valorCompra = Double.parseDouble(values.getAsString(ControleContract.ComprasEntry.COLUNA_VALOR));
         double valorParcela = valorCompra / parcelas;
         int mes = values.getAsInteger(ControleContract.ComprasEntry.COLUNA_MES);
+        int ano = values.getAsInteger(ControleContract.ComprasEntry.COLUNA_ANO);
         int diaCompra = values.getAsInteger(ControleContract.ComprasEntry.COLUNA_DIA);
         int diaFechamentoCartao = this.getDiaFechamento(db, idCompra);
 
@@ -149,31 +148,40 @@ public class ControleProvider extends ContentProvider {
         if(parcelas > 1){
             for(int i = 0; i < parcelas; i++){
                 mes++;
+                if(mes > 12){
+                    mes = 1;
+                    ano++;
+                }
                 String m = String.valueOf(mes);
                 if(mes < 10){
                     m = "0" + m;
                 }
-                ContentValues valores = this.setValores(idCompra, valorParcela, m);
+                ContentValues valores = this.setValores(idCompra, valorParcela, m, String.valueOf(ano));
                 db.insert(ControleContract.ParcelasEntry.NOME_TABELA, null, valores);
             }
         } else {
             mes++;  // Aumenta mais 1 no mes porque ele só vai pagar no próximo mês
+            if(mes > 12){
+                mes = 1;
+                ano++;
+            }
             String m = String.valueOf(mes);
             if(mes < 10){
                 m = "0" + m;
             }
-            ContentValues valores = this.setValores(idCompra, valorParcela, m);
+            ContentValues valores = this.setValores(idCompra, valorParcela, m, String.valueOf(ano));
             db.insert(ControleContract.ParcelasEntry.NOME_TABELA, null, valores);
         }
     }
 
-    private ContentValues setValores(long idCompra, double valorParcela, String mes){
+    private ContentValues setValores(long idCompra, double valorParcela, String mes, String ano){
         ContentValues values = new ContentValues();
         values.put(ControleContract.ParcelasEntry.COLUNA_FK_COMPRA, Integer.parseInt(String.valueOf(idCompra)));
         Locale.setDefault(Locale.US);   // Tem que ser no formato interncional, para que seja inserido o valor com o separador de casas decimais "." (ponto)
         values.put(ControleContract.ParcelasEntry.COLUNA_VALOR_PARCELA, new DecimalFormat("###,##0.00").format(valorParcela));
         values.put(ControleContract.ParcelasEntry.COLUNA_MES, mes);
-        values.put(ControleContract.ParcelasEntry.COLUNA_ESTATOS, "dev");
+        values.put(ControleContract.ParcelasEntry.COLUNA_ANO, ano);
+        values.put(ControleContract.ParcelasEntry.COLUNA_ESTATUS, ControleContract.ParcelasEntry.ESTATUS_COMPRA_DEV);
         return values;
     }
 

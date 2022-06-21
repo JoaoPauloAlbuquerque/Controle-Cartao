@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 public class ControleDbHelp extends SQLiteOpenHelper {
 
-    private static final int VERSAO_BD = 5;
+    private static final int VERSAO_BD = 6;
     private static final String NOME_BD = "controle.db";
 
     public ControleDbHelp(@Nullable Context context) {
@@ -43,7 +43,8 @@ public class ControleDbHelp extends SQLiteOpenHelper {
                 ControleContract.ParcelasEntry.COLUNA_FK_COMPRA + " INTEGER NOT NULL," +
                 ControleContract.ParcelasEntry.COLUNA_VALOR_PARCELA + " TEXT NOT NULL," +
                 ControleContract.ParcelasEntry.COLUNA_MES + " VARCHAR(2) NOT NULL," +
-                ControleContract.ParcelasEntry.COLUNA_ESTATOS + " TEXT NOT NULL," +
+                ControleContract.ParcelasEntry.COLUNA_ANO + " VARCHAR(4) NOT NULL," +
+                ControleContract.ParcelasEntry.COLUNA_ESTATUS + " TEXT NOT NULL DEFAULT 'dev'," +
                 "FOREIGN KEY (" + ControleContract.ParcelasEntry.COLUNA_FK_COMPRA + ") " +
                 "REFERENCES " + ControleContract.ComprasEntry.NOME_TABELA + " (" + ControleContract.ComprasEntry._ID + ") ON DELETE CASCADE);";
         db.execSQL(SQL_CREATE_TABLE_PARCELAS);

@@ -112,7 +112,18 @@ public class CalcUtils {
         try {
             return new SimpleDateFormat("MM", Locale.US).format(new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dataFormatadaString));
         } catch (ParseException e) {
-            Log.e("ERRO", "ao objeter data");
+            Log.e("ERRO", "ao objeter mes " + e);
+            return "";
+        }
+    }
+
+    public static String getAno(){
+        Date data = new Date();
+        String dataFormatadaString = new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(data);
+        try{
+            return new SimpleDateFormat("yyyy", Locale.US).format(new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dataFormatadaString));
+        } catch (ParseException e){
+            Log.e("ERRO", "ao objeter ano " + e);
             return "";
         }
     }
@@ -136,10 +147,13 @@ public class CalcUtils {
             while(cursor.moveToNext()){
                 int currentId = cursor.getInt(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry._ID));
                 Uri uri = ContentUris.withAppendedId(ControleContract.ParcelasEntry.URI_CONTENT, (long) currentId);
-                Cursor c = context.getContentResolver().query(uri, projection, null, new String[]{getMes()}, null);
+                Cursor c = context.getContentResolver().query(uri, projection, null, new String[]{getMes(), getAno()}, null);
                 while(c.moveToNext()){
-                    double valorAtual = Double.parseDouble(c.getString(c.getColumnIndexOrThrow(ControleContract.ParcelasEntry.COLUNA_VALOR_PARCELA)));
-                    valor += valorAtual;
+                    String estatus = c.getString(c.getColumnIndexOrThrow(ControleContract.ParcelasEntry.COLUNA_ESTATUS));
+                    if(estatus.equals(ControleContract.ParcelasEntry.ESTATUS_COMPRA_DEV)) {
+                        double valorAtual = Double.parseDouble(c.getString(c.getColumnIndexOrThrow(ControleContract.ParcelasEntry.COLUNA_VALOR_PARCELA)));
+                        valor += valorAtual;
+                    }
                 }
                 c.close();
             }

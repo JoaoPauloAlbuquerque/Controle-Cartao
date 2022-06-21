@@ -152,13 +152,7 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if(this.uriCartao != null) {
-            String[] projection = {
-                    ControleContract.CartaoEntry._ID,
-                    ControleContract.CartaoEntry.COLUNA_NOME_CARTAO,
-                    ControleContract.CartaoEntry.COLUNA_DIA_PAGAMENTO,
-                    ControleContract.CartaoEntry.COLUNA_DIA_FECHAMENTO,
-                    ControleContract.CartaoEntry.COLUNA_NUMERO_FINAL_CARTAO
-            };
+            String[] projection = ControleContract.CartaoEntry.getArrayColunms();
             return new CursorLoader(this, this.uriCartao, projection, null, null, null);
         } else {
             return null;
@@ -169,8 +163,8 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if(data.moveToNext()){
             this.nomeCartao.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.CartaoEntry.COLUNA_NOME_CARTAO)));
-            this.diaPagamento.setText(String.valueOf(data.getInt(data.getColumnIndexOrThrow(ControleContract.CartaoEntry.COLUNA_DIA_PAGAMENTO))));
-            this.diaFechamento.setText(String.valueOf(data.getInt(data.getColumnIndexOrThrow(ControleContract.CartaoEntry.COLUNA_DIA_FECHAMENTO))));
+            this.diaPagamento.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.CartaoEntry.COLUNA_DIA_PAGAMENTO)));
+            this.diaFechamento.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.CartaoEntry.COLUNA_DIA_FECHAMENTO)));
             this.numeroCartao.setText(String.valueOf(data.getInt(data.getColumnIndexOrThrow(ControleContract.CartaoEntry.COLUNA_NUMERO_FINAL_CARTAO))));
         }
     }

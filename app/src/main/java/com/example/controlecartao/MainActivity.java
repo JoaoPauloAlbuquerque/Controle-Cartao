@@ -58,12 +58,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection = {ControleContract.CartaoEntry._ID,
-                ControleContract.CartaoEntry.COLUNA_NOME_CARTAO,
-                ControleContract.CartaoEntry.COLUNA_DIA_PAGAMENTO,
-                ControleContract.CartaoEntry.COLUNA_DIA_FECHAMENTO,
-                ControleContract.CartaoEntry.COLUNA_NUMERO_FINAL_CARTAO
-        };
+        String[] projection = ControleContract.CartaoEntry.getArrayColunms();
         return new CursorLoader(this, ControleContract.CartaoEntry.URI_CONTENT, projection, null, null, null);
     }
 
