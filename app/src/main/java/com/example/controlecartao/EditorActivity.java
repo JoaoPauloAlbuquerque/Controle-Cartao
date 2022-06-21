@@ -255,7 +255,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 this.finish();
                 return true;
             case R.id.item_menu_delete:
-                Utils.createAlertDialog(this, "Deseja excuir esta compra?\n\nOs dados serão perdidos permanentemente!", new DialogInterface.OnClickListener() {
+                Utils.createAlertDialog(this, this.getString(R.string.msg_alertdialog_editoractivity), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         deleteCompra();
@@ -283,18 +283,18 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             values.put(ControleContract.ComprasEntry.COLUNA_FK_CARTAO, Integer.parseInt(String.valueOf(ContentUris.parseId(this.uri))));
             Uri uriInsert = getContentResolver().insert(ControleContract.ComprasEntry.URI_CONTENT, values);
             if(ContentUris.parseId(uriInsert) != 0){
-                Toast.makeText(this, "Compra inserida", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, this.getString(R.string.toast_compra_inserida), Toast.LENGTH_SHORT).show();
                 this.finish();
             } else {
-                Toast.makeText(this, "Erro ao inserir compra", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, this.getString(R.string.toast_erro_inserir_compras), Toast.LENGTH_SHORT).show();
             }
         } else {    // Se não, irei atualizar um item
             int rowsUpdated = getContentResolver().update(this.uri, values, null, null);
             if(rowsUpdated != 0){
-                Toast.makeText(this, "Compra atualizada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, this.getString(R.string.toast_compra_atualizada), Toast.LENGTH_SHORT).show();
                 this.finish();
             } else {
-                Toast.makeText(this, "Erro ao atualizar compra", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, this.getString(R.string.toast_erro_atualizar_compras), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -303,10 +303,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if(this.uri.getPath().split("/")[1].equals(ControleContract.PATH_COMPRAS)){
             int rowsDeleted = this.getContentResolver().delete(this.uri, null, null);
             if(rowsDeleted > 0){
-                Toast.makeText(this, "Compra deletada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, this.getString(R.string.toast_compra_deletada), Toast.LENGTH_SHORT).show();
                 this.finish();
             } else {
-                Toast.makeText(this, "Erro ao deletar compra", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, this.getString(R.string.toast_erro_deletar_compra), Toast.LENGTH_SHORT).show();
             }
         }
     }

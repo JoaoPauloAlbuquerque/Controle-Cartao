@@ -96,13 +96,13 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
                 this.finish();
                 break;
             case R.id.item_menu_delete:
-                Utils.createAlertDialog(this, "Ao excluir o cartão, você perderá todas as suas informações de compras permanentemente!\n\nDeseja continuar?", new DialogInterface.OnClickListener() {
+                Utils.createAlertDialog(this, this.getString(R.string.msg_alertdialog_adicionarcartaoacitivity), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(dialog != null){
                             dialog.dismiss();
                         }
-                        Utils.createAlertDialog(AdicionarCartaoActivity.this, "Deseja realmente excluir o cartão?", new DialogInterface.OnClickListener() {
+                        Utils.createAlertDialog(AdicionarCartaoActivity.this, AdicionarCartaoActivity.this.getString(R.string.msg_segundamsg_alertdialog_adicionarcartaoacvitiy), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 deletarCartao();
@@ -130,20 +130,20 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
         if(this.uriCartao == null) {
             Uri uri = getContentResolver().insert(ControleContract.CartaoEntry.URI_CONTENT, values);
             if(uri != null){
-                Toast.makeText(this, "Cartão inserido", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, this.getString(R.string.toast_cartao_inserido), Toast.LENGTH_SHORT).show();
                 this.finish();
             } else {
-                Toast.makeText(this, "Erro ao inserir cartão", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, this.getString(R.string.toast_erro_inserir_cartao), Toast.LENGTH_SHORT).show();
             }
         } else {
             int rowsAfected = getContentResolver().update(this.uriCartao, values, null, null);
             if(rowsAfected > 0){
-                Toast.makeText(this, "Cartao salvo", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, this.getString(R.string.toast_cartao_salvo), Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(this, MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 this.startActivity(i);
             } else {
-                Toast.makeText(this, "Erro ao salvar cartão", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, this.getString(R.string.toast_erro_salvar_cartao), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -152,7 +152,7 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
     private void deletarCartao(){
         int rowsDeleted = getContentResolver().delete(this.uriCartao, null, null);
         if(rowsDeleted != 0){
-            Toast.makeText(this, "Cartao deletado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, this.getString(R.string.toast_cartao_deletado), Toast.LENGTH_SHORT).show();
             Intent i = new Intent(this, MainActivity.class);
             // Com esta flag, quando a MainActivity for iniciada, todas as outras acticitys que
             // estiverem na pilha de execução do app seram finalizadas
@@ -160,7 +160,7 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
             this.startActivity(i);
             this.finish();
         } else {
-            Toast.makeText(this, "Erro ao deletar cartao", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, this.getString(R.string.toast_erro_deletar_cartao), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controlecartao.R;
 import com.example.controlecartao.dados.ControleContract;
+import com.example.controlecartao.utils.Utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -122,7 +123,7 @@ public class InfoCartaoActivityAdapter extends RecyclerView.Adapter<InfoCartaoAc
             } catch (ParseException e) {
                 Log.e("ERRO", "ao converter string para data");
             }
-            String dataFormatada = new SimpleDateFormat("MMMM/yyyy", new Locale("pt", "br")).format(dataConvertida);
+            String dataFormatada = new SimpleDateFormat("MMMM/yyyy", Utils.getLocale(itemView.getContext())).format(dataConvertida);
 
             titulo.setText(dataFormatada);
             adapter = new InfoCartaoActivitySubitemAdapter(cursor, mes, list.get(getAdapterPosition()));

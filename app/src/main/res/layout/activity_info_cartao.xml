@@ -24,7 +24,7 @@
             app:expandedTitleTextAppearance="@style/titulo_infocartaoactivity_expanded"
             app:expandedTitleTextColor="@android:color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:title="Compras">
+            app:title="@string/titulo_infocartaoactivity">
 
 
             <LinearLayout

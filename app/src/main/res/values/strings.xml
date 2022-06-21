@@ -7,109 +7,124 @@
 
 
     <!-- Titulo da tela MainActivity -->
-    <string name="titulo_mainactivity">Cartões</string>
+    <string name="titulo_mainactivity" translatable="true">Cartões</string>
 
     <!-- Butão de adicinar cartao -->
-    <string name="butao_adicionar_cartao_mainacvtivity">Novo cartão</string>
+    <string name="butao_adicionar_cartao_mainacvtivity" translatable="true">Novo cartão</string>
 
     <!-- Texte da view para quando o recyclerview estiver vazio -->
-    <string name="titulo_card_cartao_recyclerview_mainactivity">Meus cartões</string>
-
-    <!-- Texte da view para quando o recyclerview estiver preenchido -->
-    <string name="text_preenchido_recyclerview_mainactivity">Cadastre o primeiro cartão</string>
+    <string name="titulo_card_cartao_recyclerview_mainactivity" translatable="true">Meus cartões</string>
 
 
     <!-- Titulo da tela InfoCartaoActivity -->
-    <string name="titulo_infocartaoactivity">Resumo mensal</string>
+    <string name="titulo_infocartaoactivity" translatable="true">Compras</string>
 
     <!-- Cabeçalho do valor mensal da InfoCartaoActivity -->
-    <string name="cabecalho_valor_mensal_infocartaoactivity">Total do mês</string>
+    <string name="cabecalho_valor_mensal_infocartaoactivity" translatable="true">Total do mês</string>
 
     <!-- Cabeçalho das compras da InfoCartaoAcitivity -->
-    <string name="cabecalho_compras_infocartaoactivity">Compras feitas</string>
+    <string name="cabecalho_compras_infocartaoactivity" translatable="true">Compras feitas</string>
 
 
     <!-- Título da tela EditorActivity quando for pra adicionar uma compra-->
-    <string name="titulo_editoractivity_add_compra">Adicionar compra</string>
+    <string name="titulo_editoractivity_add_compra" translatable="true">Adicionar compra</string>
 
     <!-- Título da tela EditorActivity quando for editar uma compra -->
-    <string name="titulo_editoractivity_edit_compra">Editar compra</string>
+    <string name="titulo_editoractivity_edit_compra" translatable="true">Editar compra</string>
 
     <!-- Hint da EditorActivity do EditText "onde comprou" -->
-    <string name="hint_onde_comprou_editoractivity">Onde comprou</string>
+    <string name="hint_onde_comprou_editoractivity" translatable="true">Onde comprou</string>
 
     <!-- Hint da EditorActivity do EditText "valor da compra" -->
-    <string name="hint_valor_compra_editoractivity">Valor da compra</string>
+    <string name="hint_valor_compra_editoractivity" translatable="true">Valor da compra</string>
 
     <!-- Hint da EditorActivity do EditText "data da compra" -->
-    <string name="hint_data_compra_editoractivity">Data da compra</string>
+    <string name="hint_data_compra_editoractivity" translatable="true">Data da compra</string>
 
     <!-- Hint da EditorActivity do EditText "quantidade parcelas" -->
-    <string name="hint_quantidade_parcelas_editoractivity">Quantidade de parcelas</string>
+    <string name="hint_quantidade_parcelas_editoractivity" translatable="true">Quantidade de parcelas</string>
 
     <!-- Botão salvar da EditorActivity -->
-    <string name="botao_salvar_editoractivity">Salvar</string>
+    <string name="botao_salvar_editoractivity" translatable="true">Salvar</string>
 
 
     <!-- Título da PagamentosActivity -->
     <string name="titulo_pagamentosactivity">Pagamentos</string>
 
     <!-- Hint da PagamentosActivity do EditText "valor a ser pago" -->
-    <string name="hint_valor_a_ser_pago_pagamentosactivity">Valor a ser pago</string>
+    <string name="hint_valor_a_ser_pago_pagamentosactivity" translatable="true">Valor a ser pago</string>
 
     <!-- Hint da PagamentosActivity do EditText "numeros do cartão" -->
-    <string name="hint_ultimos_numeros_cartao_pagamentosactivity">4 últimos números do cartão</string>
+    <string name="hint_ultimos_numeros_cartao_pagamentosactivity" translatable="true">4 últimos números do cartão</string>
 
     <!-- Botão pagar da PagamentosActivity -->
-    <string name="botao_pagar_pagamentosactivity">Pagar</string>
+    <string name="botao_pagar_pagamentosactivity" translatable="true">Pagar</string>
 
 
     <!-- Título da InfoComprasActivity -->
-    <string name="titulo_infocomprasactivity">Resumo total</string>
+    <string name="titulo_infocomprasactivity" translatable="true">Resumo total</string>
 
     <!-- Cabeçalho do valor mensal da InfoComprasActivity -->
-    <string name="cabecalho_valor_total_geral_infocomprasactivity">Total geral</string>
+    <string name="cabecalho_valor_total_geral_infocomprasactivity" translatable="true">Total geral</string>
 
     <!-- Cabeçalho das compras da InfoComprasActivity -->
-    <string name="cabecalho_cartoes_infocomprasactivity">Cartões</string>
+    <string name="cabecalho_cartoes_infocomprasactivity" translatable="true">Cartões</string>
 
     <!-- Cabeçalho das valor total geral de cada cartao da InfoComprasActivity -->
-    <string name="cabecalho_total_geral_cartao_infocomprasactivity">Total</string>
+    <string name="cabecalho_total_geral_cartao_infocomprasactivity" translatable="true">Total</string>
 
 
 
     <!-- Titulo da AdicionarCartaoActivity -->
-    <string name="titulo_adicionarcartaoactivity">Adicionar cartão</string>
+    <string name="titulo_adicionarcartaoactivity" translatable="true">Adicionar cartão</string>
 
     <!-- Titulo da EditarCartaoActivity -->
-    <string name="titulo_editarcartaoactivity">Editar cartão</string>
+    <string name="titulo_editarcartaoactivity" translatable="true">Editar cartão</string>
 
     <!-- Hint da AdicionarCartaoActivity do EditText "nome do cartão" -->
-    <string name="hint_nome_do_cartao_adicionarcartaoactivity">Nome do cartão</string>
+    <string name="hint_nome_do_cartao_adicionarcartaoactivity" translatable="true">Nome do cartão</string>
 
     <!-- Hint da AdicionarCartaoAcitivity do EditText "dia pagamento" -->
-    <string name="hint_dia_pagamento_adicionarcartaoacvitity">Dia pagamento</string>
+    <string name="hint_dia_pagamento_adicionarcartaoacvitity" translatable="true">Dia pagamento</string>
 
     <!-- Hint da AdicionarCartaoAcitivity do EditText "dia fechamento" -->
-    <string name="hint_dia_fechamento_adicionarcartaoacvitity">Dia fechamento</string>
+    <string name="hint_dia_fechamento_adicionarcartaoacvitity" translatable="true">Dia fechamento</string>
 
     <!-- Hint da AdicionarCartaoAcitivity do EditText "numeros finais do cartao" -->
-    <string name="hint_numeros_final_cartao_adicionarcartaoacvitity">4 últimos números do cartão</string>
+    <string name="hint_numeros_final_cartao_adicionarcartaoacvitity" translatable="true">4 últimos números do cartão</string>
 
     <!-- Botão salvar da AdicionarCartaoAcitivity -->
-    <string name="botao_salvar_adicionarcartaoactivity">Salvar</string>
+    <string name="botao_salvar_adicionarcartaoactivity" translatable="true">Salvar</string>
 
 
 
     <!-- Strings de uso geral no app -->
 
-    <string name="cifrao">$</string>
-    <string name="mes">Mês</string>
-    <string name="desconhecido">(Desconhecido)</string>
+    <string name="cifrao" translatable="true">R$</string>
+    <string name="mes" translatable="true">Mês</string>
+    <string name="desconhecido" translatable="true">(Desconhecido)</string>
     <string name="zeros">0000</string>
     <string name="parcelas">1x</string>
-    <string name="menu_configuracao_mainactivity">Configuração</string>
-    <string name="data_padrao">mês/ano</string>
+    <string name="menu_configuracao_mainactivity" translatable="true">Configuração</string>
+    <string name="data_padrao" translatable="true">mês/ano</string>
     <string name="x">x</string>
+    <string name="sim" translatable="true">Sim</string>
+    <string name="nao" translatable="true">Não</string>
 
+    <string name="msg_alertdialog_adicionarcartaoacitivity" translatable="true">Ao excluir o cartão, você perderá todas as suas informações de compras permanentemente!\n\nDeseja continuar?</string>
+    <string name="msg_segundamsg_alertdialog_adicionarcartaoacvitiy" translatable="true">Deseja realmente excluir o cartão?</string>
+    <string name="msg_alertdialog_editoractivity" translatable="true">Deseja excuir esta compra?\n\nOs dados serão perdidos permanentemente!</string>
+
+    <string name="toast_cartao_inserido" translatable="true">Cartão inserido</string>
+    <string name="toast_erro_inserir_cartao" translatable="true">Erro ao inserir cartão</string>
+    <string name="toast_cartao_salvo" translatable="true">Cartao salvo</string>
+    <string name="toast_erro_salvar_cartao" translatable="true">Erro ao salvar cartão</string>
+    <string name="toast_cartao_deletado" translatable="true">Cartao deletado</string>
+    <string name="toast_erro_deletar_cartao" translatable="true">Erro ao deletar cartao</string>
+    <string name="toast_compra_inserida" translatable="true">Compra inserida</string>
+    <string name="toast_erro_inserir_compras" translatable="true">Erro ao inserir compra</string>
+    <string name="toast_compra_atualizada" translatable="true">Compra atualizada</string>
+    <string name="toast_erro_atualizar_compras" translatable="true">Erro ao atualizar compra</string>
+    <string name="toast_compra_deletada" translatable="true">Compra deletada</string>
+    <string name="toast_erro_deletar_compra" translatable="true">Erro ao deletar compra</string>
 </resources>

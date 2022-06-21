@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
+import com.example.controlecartao.R;
 import com.example.controlecartao.dados.ControleContract;
 
 import java.text.DecimalFormat;
@@ -91,11 +92,12 @@ public class Utils {
     /**
      * Adiciona um cifrão antes do valor.
      * Este método é usado para setar os valores nos RecyclerViews
+     * @param context
      * @param valor
      * @return
      */
-    public static String convertValueToCifrao(String valor){
-        return "$ " + valor;
+    public static String convertValueToCifrao(Context context, String valor){
+        return context.getString(R.string.cifrao) + " " + valor;
     }
 
     public static Locale getLocale(Context context){
@@ -144,8 +146,8 @@ public class Utils {
     public static void createAlertDialog(Context context, String message, DialogInterface.OnClickListener confirmationOnClickListener){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);
-        builder.setPositiveButton("Sim", confirmationOnClickListener);
-        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(context.getString(R.string.sim), confirmationOnClickListener);
+        builder.setNegativeButton(context.getString(R.string.nao), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(dialog != null){

@@ -115,9 +115,9 @@ public class InfoCartaoActivity extends AppCompatActivity implements LoaderManag
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         double valor = Utils.CalcularCompras.calcular(data, this);
         if(valor == 0.0f){
-            this.txtValor.setText("R$ 0,00");
+            this.txtValor.setText(this.getString(R.string.cifrao) + " 0,00");
         } else {
-            this.txtValor.setText(Utils.convertValueToCifrao(
+            this.txtValor.setText(Utils.convertValueToCifrao(this,
                     Utils.convertDoubleToString(this, valor)
             ));
         }
