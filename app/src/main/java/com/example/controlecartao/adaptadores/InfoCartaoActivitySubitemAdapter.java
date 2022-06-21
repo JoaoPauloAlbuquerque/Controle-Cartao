@@ -4,13 +4,10 @@ import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.service.controls.actions.ControlAction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,15 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.controlecartao.EditorActivity;
 import com.example.controlecartao.R;
 import com.example.controlecartao.dados.ControleContract;
-import com.example.controlecartao.objetos.Objeto;
-import com.example.controlecartao.utils.CalcUtils;
+import com.example.controlecartao.utils.Utils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 public class InfoCartaoActivitySubitemAdapter extends RecyclerView.Adapter<InfoCartaoActivitySubitemAdapter.SubitemMyViewHolder>{
 
@@ -98,8 +89,8 @@ public class InfoCartaoActivitySubitemAdapter extends RecyclerView.Adapter<InfoC
 
             this.descricao.setText(cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)));
             this.valor.setText(
-                    CalcUtils.convertValueToCifrao(
-                            CalcUtils.convertDoubleToString(itemView.getContext(), cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)))
+                    Utils.convertValueToCifrao(
+                            Utils.convertDoubleToString(itemView.getContext(), cursor.getString(cursor.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)))
                     )
             );
             this.data.setText(data);

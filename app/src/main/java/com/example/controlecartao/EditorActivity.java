@@ -11,9 +11,9 @@ import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,7 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.controlecartao.dados.ControleContract;
-import com.example.controlecartao.utils.CalcUtils;
+import com.example.controlecartao.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.DecimalFormat;
@@ -111,7 +111,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 }
 
                 try {
-                    Locale.setDefault(CalcUtils.getLocale(EditorActivity.this));
+                    Locale.setDefault(Utils.getLocale(EditorActivity.this));
                     String valor = new DecimalFormat("###,##0.00").format(Double.parseDouble(currentString) / 100);
                     editValorCompra.setText(valor);
                     editValorCompra.setSelection(valor.length());
@@ -207,7 +207,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     private void onCreateDataPicker(){
-        Locale.setDefault(CalcUtils.getLocale(this));
+        Locale.setDefault(Utils.getLocale(this));
         DatePickerDialog dataPicker = new DatePickerDialog(
                 EditorActivity.this,                        // Contexto
                 new DatePickerDialog.OnDateSetListener() {         // OnDateSetListener
@@ -255,7 +255,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 this.finish();
                 return true;
             case R.id.item_menu_delete:
-                this.deleteCompra();
+                Utils.createAlertDialog(this, "Deseja excuir esta compra?\n\nOs dados serão perdidos permanentemente!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteCompra();
+                    }
+                });
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -269,7 +274,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         values.put(ControleContract.ComprasEntry.COLUNA_DIA, data[0]);
         values.put(ControleContract.ComprasEntry.COLUNA_MES, data[1]);
         values.put(ControleContract.ComprasEntry.COLUNA_ANO, data[2]);
-        values.put(ControleContract.ComprasEntry.COLUNA_VALOR, CalcUtils.replaceSimbolosValorToDb(this.editValorCompra.getText().toString().trim()));
+        values.put(ControleContract.ComprasEntry.COLUNA_VALOR, Utils.replaceSimbolosValorToDb(this.editValorCompra.getText().toString().trim()));
         values.put(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS, Integer.parseInt(this.editParcelas.getText().toString().trim()));
 
 
@@ -317,7 +322,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if(data.moveToNext()){
             this.editOndeComprou.setText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_DESCRICAO)));
             this.editValorCompra.setText(
-                    CalcUtils.convertValoresDbToEditText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)))
+                    Utils.convertValoresDbToEditText(data.getString(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_VALOR)))
             );
             this.editParcelas.setText(String.valueOf(data.getInt(data.getColumnIndexOrThrow(ControleContract.ComprasEntry.COLUNA_QUANTIDADE_PARCELAS))));
             StringBuilder dataFormatada = new StringBuilder();

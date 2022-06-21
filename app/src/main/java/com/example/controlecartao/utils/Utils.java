@@ -1,7 +1,9 @@
 package com.example.controlecartao.utils;
 
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -15,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class CalcUtils {
+public class Utils {
 
     /**
      * Formata os valores para o formato pt-br adicionando vírgulas e pontos,
@@ -137,6 +139,22 @@ public class CalcUtils {
             Log.e("ERRO", "ao objeter data");
             return "";
         }
+    }
+
+    public static void createAlertDialog(Context context, String message, DialogInterface.OnClickListener confirmationOnClickListener){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message);
+        builder.setPositiveButton("Sim", confirmationOnClickListener);
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(dialog != null){
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     public static class CalcularCompras{

@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.example.controlecartao.adaptadores.InfoCartaoActivityAdapter;
 import com.example.controlecartao.dados.ControleContract;
-import com.example.controlecartao.utils.CalcUtils;
+import com.example.controlecartao.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class InfoCartaoActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -113,15 +113,15 @@ public class InfoCartaoActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        double valor = CalcUtils.CalcularCompras.calcular(data, this);
+        double valor = Utils.CalcularCompras.calcular(data, this);
         if(valor == 0.0f){
             this.txtValor.setText("R$ 0,00");
         } else {
-            this.txtValor.setText(CalcUtils.convertValueToCifrao(
-                    CalcUtils.convertDoubleToString(this, valor)
+            this.txtValor.setText(Utils.convertValueToCifrao(
+                    Utils.convertDoubleToString(this, valor)
             ));
         }
-        this.txtMes.setText(CalcUtils.getMesPorExtenso(this));
+        this.txtMes.setText(Utils.getMesPorExtenso(this));
         this.adapter.setCursor(data);
     }
 

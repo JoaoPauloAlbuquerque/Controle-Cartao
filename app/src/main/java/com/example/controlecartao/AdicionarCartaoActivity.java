@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlecartao.dados.ControleContract;
+import com.example.controlecartao.utils.Utils;
 
 public class AdicionarCartaoActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -94,7 +96,20 @@ public class AdicionarCartaoActivity extends AppCompatActivity implements Loader
                 this.finish();
                 break;
             case R.id.item_menu_delete:
-                this.deletarCartao();
+                Utils.createAlertDialog(this, "Ao excluir o cartão, você perderá todas as suas informações de compras permanentemente!\n\nDeseja continuar?", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(dialog != null){
+                            dialog.dismiss();
+                        }
+                        Utils.createAlertDialog(AdicionarCartaoActivity.this, "Deseja realmente excluir o cartão?", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deletarCartao();
+                            }
+                        });
+                    }
+                });
                 break;
             default:
                 return false;
